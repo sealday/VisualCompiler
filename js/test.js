@@ -5,7 +5,9 @@
 var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
 var width = 960,
-    height = 100;
+    height = 100,
+    duration = 1500;
+
 
 var svg = d3.select("svg#test")
     .attr("width", width)
@@ -24,7 +26,7 @@ function update(data) {
     // Update old elements as needed.
     text.attr("class", "update")
         .transition()
-        .duration(750)
+        .duration(duration)
         .attr("x", function(d, i) { return i * 64; });
 
     // ENTER
@@ -37,7 +39,7 @@ function update(data) {
         .style("fill-opacity", 1e-6)
         .text(function(d) { return d.note; })
         .transition()
-        .duration(750)
+        .duration(duration)
         .attr("y", 0)
         .style("fill-opacity", 1);
 
@@ -46,7 +48,7 @@ function update(data) {
     text.exit()
         .attr("class", "exit")
         .transition()
-        .duration(750)
+        .duration(duration)
         .attr("y", 60)
         .style("fill-opacity", 1e-6)
         .remove();
