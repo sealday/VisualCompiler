@@ -12,6 +12,7 @@
 </head>
 <body>
 <div class="container">
+    <svg id="test"></svg>
     <div class="panel panel-default" ng-controller="LeftController">
         <div class="panel-body">
             <label for="grammar-input">文法输入</label>
@@ -21,6 +22,7 @@
             <button ng-click="convert()" class="btn btn-default" ng-disabled="stepping">消除左递归</button>
             <button ng-click="step()" class="btn btn-default" ng-disabled="stepping && finish()">单步消除</button>
             <button ng-click="stop()" class="btn btn-default" ng-disabled="!stepping">停止单步</button>
+            <span ng-show="!stepping || finish()">结束</span>
             <button ng-click="beautify()" class="btn btn-default pull-right">美化输入</button>
             <!--<div>-->
                 <!--<pre id="grammar-output">{{grammarOutput}}</pre>-->
@@ -107,5 +109,6 @@
 <script src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="js/parser.js"></script>
 <script src="js/app.js"></script>
+<script src="js/test.js"></script>
 </body>
 </html>
