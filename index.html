@@ -19,7 +19,8 @@
             <h3 class="panel-title">控制栏</h3>
         </div>
         <div class="panel-body">
-            <button class="btn btn-default" ng-click="main.analyze()">{{main.canAnalyze() ? '分析文法' : '停止'}}</button>
+            <button ng-if="main.canAnalyze()" class="btn btn-default" ng-click="main.analyze()">分析文法</button>
+            <button ng-if="!main.canAnalyze()" class="btn btn-default" ng-click="main.stop()">停止</button>
             <button class="btn btn-default" ng-click="main.prev()" ng-disabled="!main.canPrev()">上一步</button>
             <button class="btn btn-default" ng-click="main.next()" ng-disabled="!main.canNext()">下一步</button>
             <p class="pull-right">{{main.text}}</p>

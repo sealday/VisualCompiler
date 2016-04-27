@@ -14,15 +14,8 @@
                 "    消除Ai 产生式之间的立即左递归\n",
                 "}\n"
             ];
-            this.lineNumber = 0;
-            this.phase = 0;
-            this.text = "";
             this.status = "STOPPED";
             this.parser = new EoLR();
-        }
-        
-        canAnalyze() {
-            return this.status === "STOPPED";
         }
         
         _update() {
@@ -30,11 +23,20 @@
             this.lineNumber = this.phases[this.phase].extra.line;
         }
         
+        canAnalyze() {
+            return this.status === "STOPPED";
+        }
+        
+        stop() {
+            this.status = "STOPPED";
+        }
+        
         analyze() {
             try {
                 this.parser.compute(this.input);
                 this.phases = this.parser.phases;
                 this.status =  "STARTED";
+                this.phase = 0;
                 this._update();
             } catch (e) {
                 console.log(e.message);
