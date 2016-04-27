@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="visualYacc">
+<html lang="en" ng-app="visualCompiler">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv=X-UA-Compatible content="IE=edge">
@@ -12,25 +12,40 @@
 </head>
 <body>
 <div class="container">
-    <svg id="test"></svg>
-    <div class="panel panel-default" ng-controller="LeftController">
-        <div class="panel-body">
-            <label for="grammar-input">文法输入</label>
-            <p>用 -> 隔开产生式头部和尾部</p>
-            <!--suppress HtmlUnknownAttribute -->
-            <textarea ng-model="grammarInput" id="grammar-input" class="form-control" ng-disabled="stepping" rows="10"></textarea>
-            <button ng-click="convert()" class="btn btn-default" ng-disabled="stepping">消除左递归</button>
-            <button ng-click="step()" class="btn btn-default" ng-disabled="stepping && finish()">单步消除</button>
-            <button ng-click="stop()" class="btn btn-default" ng-disabled="!stepping">停止单步</button>
-            <span ng-show="!stepping || finish()">结束</span>
-            <button ng-click="beautify()" class="btn btn-default pull-right">美化输入</button>
-            <!--<div>-->
-                <!--<pre id="grammar-output">{{grammarOutput}}</pre>-->
-            <!--</div>-->
-            <ul class="list-group">
-                <li class="item-listing list-group-item" ng-repeat="item in items">{{item}}</li>
-            </ul>
+    <svg id="big-show"></svg>
+    <div class="panel panel-default" ng-controller="MainController as main">
+        <textarea ng-model="main.input" rows="5" class="form-control"></textarea>
+        <div class="panel-heading">
+            <h3 class="panel-title">控制栏</h3>
         </div>
+        <div class="panel-body">
+            <button class="btn btn-default" ng-click="main.analyze()">{{main.canAnalyze() ? '分析文法' : '停止'}}</button>
+            <button class="btn btn-default" ng-click="main.prev()" ng-disabled="!main.canPrev()">上一步</button>
+            <button class="btn btn-default" ng-click="main.next()" ng-disabled="!main.canNext()">下一步</button>
+            <p class="pull-right">{{main.text}}</p>
+        </div>
+        <pre><span ng-repeat="line in main.lines" ng-class="$index == main.lineNumber ? 'current' : ''">{{line}}</span></pre>
+        <!--<div class="panel-body">-->
+            <!--<label for="grammar-input">文法输入</label>-->
+            <!--<p>用 -> 隔开产生式头部和尾部</p>-->
+            <!--&lt;!&ndash;suppress HtmlUnknownAttribute &ndash;&gt;-->
+            <!--<textarea ng-model="grammarInput" id="grammar-input" class="form-control" ng-disabled="stepping" rows="10"></textarea>-->
+            <!--<button ng-click="convert()" class="btn btn-default" ng-disabled="stepping">消除左递归</button>-->
+            <!--<button ng-click="step()" class="btn btn-default" ng-disabled="stepping && finish()">单步消除</button>-->
+            <!--<button ng-click="stop()" class="btn btn-default" ng-disabled="!stepping">停止单步</button>-->
+            <!--<span ng-show="!stepping || finish()">结束</span>-->
+            <!--<button ng-click="beautify()" class="btn btn-default pull-right">美化输入</button>-->
+            <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<pre id="_grammar-output">{{grammarOutput}}</pre>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<ul class="list-group">-->
+                <!--<li class="item-listing list-group-item" ng-repeat="item in items">{{item}}</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    </div>
+    <div class="panel panel-danger" ng-controller="AnalyseController">
+        <input ng-model="phaseIndex">
+        <pre><span ng-repeat="phase in phases" ng-style="{background: $index == phaseIndex - 1 ? 'red': 'white'}" style="display: block">{{phase.text}}</span></pre>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -102,13 +117,14 @@
         </tbody>
     </table>
 </div>
-
 <script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
 <script src="bower_components/d3/d3.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="js/parser.js"></script>
+<script src="js/EoLR.js"></script>
 <script src="js/app.js"></script>
-<script src="js/test.js"></script>
+<script src="js/big_show.js"></script>
+<script src="js/left_recursive.service.js"></script>
 </body>
 </html>

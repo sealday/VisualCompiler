@@ -1,9 +1,92 @@
 (function(){
     'use strict';
+    
+    class MainController {
 
+        constructor() {
+            this.lines = [
+                "按照某个顺序将非终结符号排序为 A1,A2,...,An\n",
+                "for ( 从 1 到 n 的每个 i ) { \n",
+                "    for ( 从 1 到 i - 1 的每个 j ) {\n",
+                "        将每个形如Ai -> Ajγ的产生式替换为产生式组 Ai -> δ1γ | δ2γ | ... | δkγ \n",
+                "        其中Aj -> δ1 | δ2 | ... | δk 是所有的 Aj 的产生式\n",
+                "    }\n",
+                "    消除Ai 产生式之间的立即左递归\n",
+                "}\n"
+            ];
+            this.lineNumber = 0;
+            this.phase = 0;
+            this.text = "";
+            this.status = "STOPPED";
+            this.parser = new EoLR();
+        }
+        
+        canAnalyze() {
+            return this.status === "STOPPED";
+        }
+        
+        _update() {
+            this.text = this.phases[this.phase].text;
+            this.lineNumber = this.phases[this.phase].extra.line;
+        }
+        
+        analyze() {
+            try {
+                this.parser.compute(this.input);
+                this.phases = this.parser.phases;
+                this.status =  "STARTED";
+                this._update();
+            } catch (e) {
+                console.log(e.message);
+            }
+        }
+        
+        canNext() {
+            if (this.status === "STARTED") {
+                return this.phase + 1 < this.phases.length;
+            }
+            return false;
+        }
+        
+        next() {
+            if (this.canNext()) {
+                this.phase++;
+                this._update();
+            }
+        }
+        
+        canPrev() {
+            if (this.status === "STARTED") {
+                return this.phase > 0;
+            }
+            return false;
+        }
+        
+        prev() {
+            if (this.canPrev()) {
+                this.phase--;
+                this._update();
+            }
+        }
+    }
+    
     angular
-        .module('visualYacc', ['ngAnimate'])
-        .controller('LeftController', $scope => {
+        .module('visualCompiler', ['ngAnimate'])
+        .controller('AnalyseController', $scope => {
+            $scope.phaseIndex = 1;
+            $scope.phases = [
+                {text:"状态 0 入栈;\n", style:{background: 'red'}},
+                {text:"把下一个输入符号读入 a 中;\n", style:{background: 'red'}},
+                {text:"DO\n", style:{background: 'red'}}
+            ];
+        })
+        .controller('MainController', MainController)
+        .controller('LeftController', ($scope) => {
+            
+            console.log(leftRecursiveService.getName());
+            
+            $scope.some = [1, 2, 3, 4, 5];
+            
             $scope.stepping = false;
             $scope.grammarInput = "";
             $scope.grammarOutput = "";
@@ -228,91 +311,3 @@ WHILE TRUE`
     span.text(d => `${d}\n`);
    
 })();
-
-// angular
-//     .module('compiler', [])
-//     .controller('HomeController', ["$scope", HomeController])
-//     .directive('fileChange', fileChange)
-//     .directive('fileDropZone', fileDropZone)
-//     ;
-//
-// function HomeController($scope) {
-//     var vm = this;
-//     vm.translate = function() {
-//         vm.grammarOutput = vm.grammarInput;
-//     };
-//
-//     vm.fileHandler = function() {
-//         var fileReader = new FileReader();
-//         fileReader.onload = function(evt) {
-//             $scope.$apply(function(){
-//                 vm.grammarOutput = evt.target.result;
-//             });
-//         };
-//         fileReader.readAsText(vm.files[0]);
-//     };
-//
-//     vm.temp = function() {
-//         console.log("--");
-//     };
-//
-//     vm.myHandler = function(some){
-//         vm.grammarOutput = some;
-//     };
-// }
-//
-// function fileChange() {
-//     return {
-//         restrict: 'A',
-//         scope: {
-//             fileHandler: '='
-//         },
-//         link: function link(scope, element, attrs, ctrl) {
-//             element.on('change', onChange);
-//             scope.$on('destroy', function() {
-//                 element.off('change', onChange);
-//             });
-//             function onChange() {
-//                 var fileReader = new FileReader();
-//                 fileReader.onload = function(evt) {
-//                     scope.$apply(function(){
-//                         scope.fileHandler(evt.target.result);
-//                     });
-//                 };
-//                 fileReader.readAsText(element[0].files[0]);
-//             }
-//         }
-//     };
-// }
-//
-// function fileDropZone() {
-//     return {
-//         restrict: 'A',
-//         scope: {
-//             fileHandler: '=',
-//             fileType: '@'
-//         },
-//         link: function link(scope, element, attrs, ctrl) {
-//             element.on('dragover', function(event){
-//                 event.stopPropagation();
-//                 event.preventDefault();
-//             });
-//             element.on('dragenter', function(event){
-//                 event.stopPropagation();
-//                 event.preventDefault();
-//             });
-//
-//             element.on('drop', function(event){
-//                 event.stopPropagation();
-//                 event.preventDefault();
-//                 var fileReader = new FileReader();
-//                 fileReader.onload = function(evt) {
-//                     scope.$apply(function(){
-//                         scope.fileHandler(evt.target.result);
-//                     });
-//                 };
-//                 fileReader.readAsText(event.dataTransfer.files[0]);
-//             });
-//         }
-//     }
-// }

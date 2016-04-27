@@ -36,3 +36,8 @@ text {
 .exit {
     fill: brown;
 }
+
+span.current {
+    display: block;
+    background-color: red;
+}

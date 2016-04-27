@@ -65,7 +65,7 @@
  token:       (the produced terminal token, if any)
  line:        (yylineno)
  }
- while parser (grammar) errors will also provide these members, i.e. parser errors deliver a superset of attributes: {
+ while parser (_grammar) errors will also provide these members, i.e. parser errors deliver a superset of attributes: {
  loc:         (yylloc)
  expected:    (string describing the set of expected tokens)
  recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
@@ -74,35 +74,45 @@
 var parser = (function(){
     var parser = {trace: function trace(){},
         yy: {},
-        symbols_: {"error":2,"expressions":3,"head":4,"GENERATE":5,"body":6,"EOF":7,"WORD":8,"term":9,"OR":10,"SYMBOL":11,"$accept":0,"$end":1},
-        terminals_: {2:"error",5:"GENERATE",7:"EOF",8:"WORD",10:"OR",11:"SYMBOL"},
-        productions_: [0,[3,4],[4,1],[6,1],[6,3],[9,1],[9,1],[9,2],[9,2]],
+        symbols_: {"error":2,"grammar":3,"expressions":4,"expression":5,"head":6,"GENERATE":7,"body":8,"EOF":9,"LINE":10,"WORD":11,"term":12,"OR":13,"SYMBOL":14,"$accept":0,"$end":1},
+        terminals_: {2:"error",7:"GENERATE",9:"EOF",10:"LINE",11:"WORD",13:"OR",14:"SYMBOL"},
+        productions_: [0,[3,1],[4,1],[4,2],[5,4],[5,4],[5,1],[5,1],[6,1],[8,1],[8,3],[12,1],[12,1],[12,2],[12,2]],
         performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */
                                           /**/) {
             /* this == yyval */
 
             var $0 = $$.length - 1;
             switch (yystate) {
-                case 1:return {head: $$[$0-3], body: $$[$0-1]};
+                case 1: return $$[$0];
                     break;
-                case 2:this.$ = $$[$0];
+                case 2: this.$ = []; if ($$[$0] !== "\n") this.$.push($$[$0]);
                     break;
-                case 3:this.$ = [$$[$0]];
+                case 3:if ($$[$0] !== "\n") $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
                     break;
-                case 4:$$[$0-2].push($$[$0]); this.$ = $$[$0-2];
+                case 4:this.$ = {head: $$[$0-3], body: $$[$0-1]};
                     break;
-                case 5:this.$ = [$$[$0]];
+                case 5:this.$ = {head: $$[$0-3], body: $$[$0-1]};
                     break;
-                case 6:this.$ = [$$[$0]];
+                case 7:this.$ = "\n";
                     break;
-                case 7:$$[$0-1].push($$[$0]); this.$ = $$[$0-1];
+                case 8:this.$ = $$[$0];
                     break;
-                case 8: $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
+                case 9:this.$ = [$$[$0]];
+                    break;
+                case 10:$$[$0-2].push($$[$0]); this.$ = $$[$0-2];
+                    break;
+                case 11:this.$ = [$$[$0]];
+                    break;
+                case 12:this.$ = [$$[$0]];
+                    break;
+                case 13:$$[$0-1].push($$[$0]); this.$ = $$[$0-1];
+                    break;
+                case 14: $$[$0-1].push($$[$0]); this.$ = $$[$0-1];
                     break;
             }
         },
-        table: [{3:1,4:2,8:[1,3]},{1:[3]},{5:[1,4]},{5:[2,2]},{6:5,8:[1,7],9:6,11:[1,8]},{7:[1,9],10:[1,10]},{7:[2,3],8:[1,11],10:[2,3],11:[1,12]},{7:[2,5],8:[2,5],10:[2,5],11:[2,5]},{7:[2,6],8:[2,6],10:[2,6],11:[2,6]},{1:[2,1]},{8:[1,7],9:13,11:[1,8]},{7:[2,7],8:[2,7],10:[2,7],11:[2,7]},{7:[2,8],8:[2,8],10:[2,8],11:[2,8]},{7:[2,4],8:[1,11],10:[2,4],11:[1,12]}],
-        defaultActions: {3:[2,2],9:[2,1]},
+        table: [{3:1,4:2,5:3,6:4,9:[1,6],10:[1,5],11:[1,7]},{1:[3]},{1:[2,1],5:8,6:4,9:[1,6],10:[1,5],11:[1,7]},{1:[2,2],9:[2,2],10:[2,2],11:[2,2]},{7:[1,9]},{1:[2,6],9:[2,6],10:[2,6],11:[2,6]},{1:[2,7],9:[2,7],10:[2,7],11:[2,7]},{7:[2,8]},{1:[2,3],9:[2,3],10:[2,3],11:[2,3]},{8:10,11:[1,12],12:11,14:[1,13]},{9:[1,14],10:[1,15],13:[1,16]},{9:[2,9],10:[2,9],11:[1,17],13:[2,9],14:[1,18]},{9:[2,11],10:[2,11],11:[2,11],13:[2,11],14:[2,11]},{9:[2,12],10:[2,12],11:[2,12],13:[2,12],14:[2,12]},{1:[2,4],9:[2,4],10:[2,4],11:[2,4]},{1:[2,5],9:[2,5],10:[2,5],11:[2,5]},{11:[1,12],12:19,14:[1,13]},{9:[2,13],10:[2,13],11:[2,13],13:[2,13],14:[2,13]},{9:[2,14],10:[2,14],11:[2,14],13:[2,14],14:[2,14]},{9:[2,10],10:[2,10],11:[1,17],13:[2,10],14:[1,18]}],
+        defaultActions: {7:[2,8]},
         parseError: function parseError(str,hash){if(hash.recoverable){this.trace(str)}else{throw new Error(str)}},
         parse: function parse(input) {
             var self = this, stack = [0], vstack = [null], lstack = [], table = this.table, yytext = '', yylineno = 0, yyleng = 0, recovering = 0, TERROR = 2, EOF = 1;
@@ -301,22 +311,24 @@ var parser = (function(){
 
                 var YYSTATE=YY_START;
                 switch($avoiding_name_collisions) {
-                    case 0:/* skip whitespace */
+                    case 0:return 10
                         break;
-                    case 1:return 8
+                    case 1:/* skip whitespace */
                         break;
-                    case 2:return 5
+                    case 2:return 11
                         break;
-                    case 3:return 10
+                    case 3:return 7
                         break;
-                    case 4:return 7
+                    case 4:return 13
                         break;
-                    case 5:return 11
+                    case 5:return 9
+                        break;
+                    case 6:return 14
                         break;
                 }
             },
-            rules: [/^(?:\s+)/,/^(?:\w+)/,/^(?:->)/,/^(?:\|)/,/^(?:$)/,/^(?:.)/],
-            conditions: {"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}}
+            rules: [/^(?:\n)/,/^(?:\s+)/,/^(?:\w+)/,/^(?:->|:=|→)/,/^(?:\|)/,/^(?:$)/,/^(?:.)/],
+            conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6],"inclusive":true}}
         };
         return lexer;
     })();
