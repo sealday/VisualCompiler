@@ -3,7 +3,7 @@
     
     class MainController {
 
-        constructor() {
+        constructor($scope) {
             this.lines = [
                 "按照某个顺序将非终结符号排序为 A1,A2,...,An\n",
                 "for ( 从 1 到 n 的每个 i ) { \n",
@@ -70,6 +70,10 @@
                 this._update();
             }
         }
+        
+        fileHandler() {
+            console.log("--");
+        }
     }
     
     angular
@@ -83,199 +87,27 @@
             ];
         })
         .controller('MainController', MainController)
-        .controller('LeftController', ($scope) => {
-            
-            console.log(leftRecursiveService.getName());
-            
-            $scope.some = [1, 2, 3, 4, 5];
-            
-            $scope.stepping = false;
-            $scope.grammarInput = "";
-            $scope.grammarOutput = "";
-            $scope.items = [];
-            let statements = [];
-            let step_counter = 0;
-            let count = 0;
-            
-            $scope.step = () => {
-                if ($scope.stepping) {
-                    
-                    if (step_counter >= statements.length) {
-                        $scope.stepping = false;
-                        return;
-                    }
-                    
-                    let g = parser.parse(statements[step_counter]);
-                    let recursive = false;
-                    let beta = [];
-                    let alpha = [];
-                    for (let i = 0; i < g.body.length; i++) {
-                        if (g.body[i][0] == g.head) {
-                            recursive = true;
-                            g.body[i].shift();
-                            alpha.push(g.body[i]);
-                        } else {
-                            beta.push(g.body[i]);
-                        }
-                    }
-                    if (recursive) {
-                        let a = {head: g.head, body: []};
-                        for (let i = 0; i < beta.length; i++) {
-                            beta[i].push(g.head + '\'');
-                            a.body.push(beta[i]);
-                        }
-
-                        let a1 = {head: g.head + '\'', body: []};
-                        for (let i = 0; i < alpha.length; i++) {
-                            alpha[i].push(g.head + '\'');
-                            a1.body.push(alpha[i]);
-                        }
-                        a1.body.push(['ϵ']);
-                        $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(a)} \n`;
-                        $scope.items.push(`产生式 ${count} ${beautifyGrammar(a)} \n`);
-                        count++;
-                        $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(a1)} \n`;
-                        $scope.items.push(`产生式 ${count} ${beautifyGrammar(a1)} \n`);
-                        console.log(beautifyGrammar(g));
-                    } else {
-                        $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(g)} \n`;
-                        $scope.items.push(`产生式 ${count} ${beautifyGrammar(g)} \n`);
-                    }
-                    
-                } else {
-                    // 初始化单步
-                    $scope.stepping = true;
-                    $scope.items = [];
-                    $scope.grammarOutput = "";
-                    statements = [];
-                    step_counter = 0;
-                    count = 1;
-                    
-                    let crude_statements = $scope.grammarInput.split("\n");
-                    crude_statements.forEach(s => {
-                        if (s.trim()) {
-                            statements.push(s);
-                        }
+        .directive('fileChange', function() {
+            return {
+                restrict: 'A',
+                scope: {
+                    fileHandler: '='
+                },
+                link: function(scope, element) {
+                    element.on('change', onChange);
+                    scope.$on('destroy', function() {
+                        element.off('change', onChange);
                     });
-
-                    let g = parser.parse(statements[step_counter]);
-                    let recursive = false;
-                    let beta = [];
-                    let alpha = [];
-                    for (let i = 0; i < g.body.length; i++) {
-                        if (g.body[i][0] == g.head) {
-                            recursive = true;
-                            g.body[i].shift();
-                            alpha.push(g.body[i]);
-                        } else {
-                            beta.push(g.body[i]);
-                        }
+                    function onChange() {
+                        let reader = new FileReader();
+                        reader.onload = function(evt) {
+                            scope.$apply(function() {
+                                scope.fileHandler(evt.target.result);
+                            });
+                        };
+                        reader.readAsText(element[0].files[0]);
                     }
-                    if (recursive) {
-                        let a = {head: g.head, body: []};
-                        for (let i = 0; i < beta.length; i++) {
-                            beta[i].push(g.head + '\'');
-                            a.body.push(beta[i]);
-                        }
-
-                        let a1 = {head: g.head + '\'', body: []};
-                        for (let i = 0; i < alpha.length; i++) {
-                            alpha[i].push(g.head + '\'');
-                            a1.body.push(alpha[i]);
-                        }
-                        a1.body.push(['ϵ']);
-                        $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(a)} \n`;
-                        $scope.items.push(`产生式 ${count} ${beautifyGrammar(a)} \n`);
-                        count++;
-                        $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(a1)} \n`;
-                        $scope.items.push(`产生式 ${count} ${beautifyGrammar(a1)} \n`);
-                        console.log(beautifyGrammar(g));
-                    } else {
-                        $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(g)} \n`;
-                        $scope.items.push(`产生式 ${count} ${beautifyGrammar(g)} \n`);
-                    }
-                    
                 }
-                
-                count++;
-                step_counter++;
-            };
-            
-            $scope.finish = () => {
-                return step_counter >= statements.length;
-            };
-            
-            $scope.stop = () => {
-                $scope.stepping = false;
-            };
-            
-            $scope.beautify = () => {
-                let statements = $scope.grammarInput.split('\n');
-                console.log(statements);
-                $scope.grammarInput = '';
-                console.dir(statements);
-                statements.forEach(e => {
-                    if (e.trim()) {
-                        $scope.grammarInput += `${beautifyGrammar(parser.parse(e))} \n`;
-                    }
-                });
-            };
-            $scope.convert = () => {
-                $scope.items = [];
-                let statements = $scope.grammarInput.split("\n");
-                $scope.grammarOutput = "";
-                let count = 0;
-                statements.forEach(e => {
-                    if (e.trim()) {
-                        count++;
-
-                        let g = parser.parse(e);
-                        let recursive = false;
-                        let beta = [];
-                        let alpha = [];
-                        for (let i = 0; i < g.body.length; i++) {
-                            if (g.body[i][0] == g.head) {
-                                recursive = true;
-                                g.body[i].shift();
-                                alpha.push(g.body[i]);
-                            } else {
-                                beta.push(g.body[i]);
-                            }
-                        }
-                        if (recursive) {
-                            let a = {head: g.head, body: []};
-                            for (let i = 0; i < beta.length; i++) {
-                                beta[i].push(g.head + '\'');
-                                a.body.push(beta[i]);
-                            }
-
-                            let a1 = {head: g.head + '\'', body: []};
-                            for (let i = 0; i < alpha.length; i++) {
-                                alpha[i].push(g.head + '\'');
-                                a1.body.push(alpha[i]);
-                            }
-                            a1.body.push(['ϵ']);
-                            $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(a)} \n`;
-                            $scope.items.push(`产生式 ${count} ${beautifyGrammar(a)} \n`);
-                            count++;
-                            $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(a1)} \n`;
-                            $scope.items.push(`产生式 ${count} ${beautifyGrammar(a1)} \n`);
-                            console.log(beautifyGrammar(g));
-                        } else {
-                            $scope.grammarOutput += `产生式 ${count} ${beautifyGrammar(g)} \n`;
-                            $scope.items.push(`产生式 ${count} ${beautifyGrammar(g)} \n`);
-                        }
-                    }
-                })
-            };
-
-            function beautifyGrammar(obj) {
-                let body = [];
-                obj.body.forEach(e => {
-                    body.push(e.join(' '));
-                });
-
-                return obj.head + " -> " + body.join(' | ');
             }
         });
 
