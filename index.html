@@ -14,7 +14,7 @@
 <div class="container">
     <svg id="big-show"></svg>
     <div class="panel panel-default" ng-controller="MainController as main">
-        <input type="file" file-change="" file-handler="main.fileHandler" value="">
+        <input type="file" file-change="main.input" value="">
         <textarea ng-model="main.input" rows="5" class="form-control"></textarea>
         <div class="panel-heading">
             <h3 class="panel-title">控制栏</h3>
@@ -37,7 +37,7 @@
             <!--<button ng-click="stop()" class="btn btn-default" ng-disabled="!stepping">停止单步</button>-->
             <!--<span ng-show="!stepping || finish()">结束</span>-->
             <!--<button ng-click="beautify()" class="btn btn-default pull-right">美化输入</button>-->
-            <!--&lt;!&ndash;<div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div>&ndash;&gt;--d>
                 <!--&lt;!&ndash;<pre id="_grammar-output">{{grammarOutput}}</pre>&ndash;&gt;-->
             <!--&lt;!&ndash;</div>&ndash;&gt;-->
             <!--<ul class="list-group">-->

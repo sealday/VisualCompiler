@@ -16,6 +16,8 @@
             ];
             this.status = "STOPPED";
             this.parser = new EoLR();
+            this.$scope = $scope;
+            this.input = "--";
         }
         
         _update() {
@@ -71,8 +73,10 @@
             }
         }
         
-        fileHandler() {
-            console.log("--");
+        fileHandler(result) {
+            this.input = result;
+            console.log(this.input);
+            console.log(result);
         }
     }
     
@@ -91,9 +95,10 @@
             return {
                 restrict: 'A',
                 scope: {
-                    fileHandler: '='
+                    fileChange: '='
                 },
-                link: function(scope, element) {
+                link: function(scope, element, attr, ctrl) {
+                    scope.other = "what";
                     element.on('change', onChange);
                     scope.$on('destroy', function() {
                         element.off('change', onChange);
@@ -102,7 +107,7 @@
                         let reader = new FileReader();
                         reader.onload = function(evt) {
                             scope.$apply(function() {
-                                scope.fileHandler(evt.target.result);
+                                scope.fileChange = evt.target.result;
                             });
                         };
                         reader.readAsText(element[0].files[0]);
