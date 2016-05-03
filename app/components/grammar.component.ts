@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange} from '@angular/core';
+import {Component, ElementRef, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'grammar',
@@ -10,8 +10,10 @@ export class GrammarComponent {
     @Output('grammar')
     grammarEmitter = new EventEmitter<string>();
     
+    grammar: string;
+
     constructor(private _el: ElementRef) { }
-    
+
     /**
      * 处理加载文件的点击事件
      */
@@ -43,21 +45,19 @@ export class GrammarComponent {
         let dt = e.dataTransfer;
         let files = dt.files;
         console.log(files);
-        
+
         this._handleFile(files[0]);
     }
-    
+
     private _handleFile(file) {
         let reader = new FileReader();
-        reader.onload = e => {
-            // 这里应该只要给 e 指明下类型也可以不报错
-            // 暂时还没有找到类型 因此这里先 suppress 一下
-            //noinspection TypeScriptUnresolvedVariable
-            this.grammarChange(e.target.result);
+        reader.onload = () => {
+            this.grammarChange(reader.result);
+            this.grammar = reader.result;
         };
         reader.readAsText(file);
     }
-    
+
     grammarChange(grammar) {
         this.grammarEmitter.emit(grammar);
     }

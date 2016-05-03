@@ -9,5 +9,5 @@ bower_components/
 node_modules/
 npm-debug.log
 typings/
-app/*.js
-app/*.map
+app/**/*.js
+app/**/*.map

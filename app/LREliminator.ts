@@ -1,4 +1,9 @@
-import {parser} from './parser'
+
+interface Parser {
+    parse(input: string): string;
+}
+
+declare var parser: Parser;
 
 class Phase {
     public text: string;
