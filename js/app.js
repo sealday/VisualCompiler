@@ -75,8 +75,6 @@
         
         fileHandler(result) {
             this.input = result;
-            console.log(this.input);
-            console.log(result);
         }
     }
     
@@ -95,7 +93,7 @@
             return {
                 restrict: 'A',
                 scope: {
-                    fileChange: '='
+                    fileChange: '&'
                 },
                 link: function(scope, element, attr, ctrl) {
                     scope.other = "what";
@@ -107,7 +105,7 @@
                         let reader = new FileReader();
                         reader.onload = function(evt) {
                             scope.$apply(function() {
-                                scope.fileChange = evt.target.result;
+                                scope.fileChange({result: evt.target.result});
                             });
                         };
                         reader.readAsText(element[0].files[0]);
