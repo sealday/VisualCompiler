@@ -16,8 +16,9 @@
             ];
             this.status = "STOPPED";
             this.parser = new EoLR();
-            this.$scope = $scope;
-            this.input = "--";
+            this.extractarith = new extractFactor();
+            this.output="";
+            this.extracleftoutput = "";
         }
         
         _update() {
@@ -36,9 +37,11 @@
         analyze() {
             try {
                 this.parser.compute(this.input);
+                this.output = this.printoutput(this.parser._grammar);
                 this.phases = this.parser.phases;
                 this.status =  "STARTED";
                 this.phase = 0;
+
                 this._update();
             } catch (e) {
                 console.log(e.message);
@@ -72,9 +75,38 @@
                 this._update();
             }
         }
-        
+
+        //点击上传文件之后,读取文件内容显示到textarea里面
         fileHandler(result) {
-            this.input = result;
+            this.input=result;
+        }
+
+        extract(){
+            this.extractarith._extract(this.parser._grammar);
+           this.extracleftoutput = this.printoutput(this.extractarith.new_grammar);
+
+        }
+
+        /**
+         * 将结果打印在页面上
+         * @param grammar
+         * @returns {string}
+         */
+        printoutput(grammar){
+            let outputmodel = "";
+            grammar.forEach((current)=> {
+                outputmodel += `${current.head}->`;
+                current.body.forEach((bodycurrent)=>{
+                    bodycurrent.forEach((bodycurrentnow)=>{
+                        outputmodel += bodycurrentnow;
+                    });
+                    outputmodel += "|";
+                });
+                outputmodel = outputmodel.substr(0,outputmodel.length-1);
+                outputmodel +="\n";
+            });
+
+            return outputmodel;
         }
     }
     
@@ -88,7 +120,7 @@
                 {text:"DO\n", style:{background: 'red'}}
             ];
         })
-        .controller('MainController', MainController)
+        .controller('MainController', () => new MainController())
         .directive('fileChange', function() {
             return {
                 restrict: 'A',
