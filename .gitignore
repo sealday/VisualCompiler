@@ -4,7 +4,10 @@
 
 # User-specific stuff:
 .idea/
-/*.iml
-/bower_components/
-/node_modules/
-
+*.iml
+bower_components/
+node_modules/
+npm-debug.log
+typings/
+app/*.js
+app/*.map
