@@ -133,7 +133,8 @@
                 scope: {
                     fileChange: '&'
                 },
-                link: function(scope, element) {
+                link: function(scope, element, attr, ctrl) {
+                    scope.other = "what";
                     element.on('change', onChange);
                     scope.$on('destroy', function() {
                         element.off('change', onChange);
@@ -142,7 +143,7 @@
                         let reader = new FileReader();
                         reader.onload = function(evt) {
                             scope.$apply(function() {
-                                scope.fileChange ({result: evt.target.result});
+                                scope.fileChange({result: evt.target.result});
                             });
                         };
                         reader.readAsText(element[0].files[0]);
