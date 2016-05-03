@@ -1,16 +1,17 @@
-import {Component, ElementRef, Output} from '@angular/core';
+import {Component, ElementRef, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange} from '@angular/core';
 
 @Component({
     selector: 'grammar',
-    templateUrl: 'app/grammar.component.html',
-    styleUrls: ['app/grammar.component.css']
+    templateUrl: 'app/components/grammar.component.html',
+    styleUrls: ['app/components/grammar.component.css']
 })
 
 export class GrammarComponent {
-    grammar: string;
+    @Output('grammar')
+    grammarEmitter = new EventEmitter<string>();
     
     constructor(private _el: ElementRef) { }
-
+    
     /**
      * 处理加载文件的点击事件
      */
@@ -52,8 +53,12 @@ export class GrammarComponent {
             // 这里应该只要给 e 指明下类型也可以不报错
             // 暂时还没有找到类型 因此这里先 suppress 一下
             //noinspection TypeScriptUnresolvedVariable
-            this.grammar = e.target.result;
+            this.grammarChange(e.target.result);
         };
         reader.readAsText(file);
+    }
+    
+    grammarChange(grammar) {
+        this.grammarEmitter.emit(grammar);
     }
 }

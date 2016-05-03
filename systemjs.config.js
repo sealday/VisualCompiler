@@ -5,7 +5,8 @@
         'app':                        'app', // 'dist',
         'rxjs':                       'node_modules/rxjs',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-        '@angular':                   'node_modules/@angular'
+        '@angular':                   'node_modules/@angular',
+        'lodash':                     'node_modules/lodash',
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
@@ -25,17 +26,18 @@
         '@angular/router-deprecated',
         '@angular/testing',
         '@angular/upgrade',
+        'lodash',
     ];
 
     // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
     packageNames.forEach(function(pkgName) {
         packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
     });
-
+    
     var config = {
         map: map,
         packages: packages
-    }
+    };
 
     // filterSystemConfig - index.html's chance to modify config before we register it.
     if (global.filterSystemConfig) { global.filterSystemConfig(config); }
