@@ -38,6 +38,7 @@ class EoLR {
             this._phases.push(new Phase(`消除第 ${index} 个非终结符号的产生式之间的立即左递归`,{index, line: 6}));
             this._eliminate(current);
         });
+      
     }
     
 
