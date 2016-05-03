@@ -17,6 +17,7 @@
             this.status = "STOPPED";
             this.parser = new EoLR();
             this.extractarith = new extractFactor();
+            this.firstFollowSet = new FirstSet();
             this.output="";
             this.extracleftoutput = "";
         }
@@ -85,6 +86,11 @@
             this.extractarith._extract(this.parser._grammar);
            this.extracleftoutput = this.printoutput(this.extractarith.new_grammar);
 
+        }
+
+
+        findFirstSet(){
+            this.firstFollowSet._findFirst(this.extractarith.new_grammar);
         }
 
         /**

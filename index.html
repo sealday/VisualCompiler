@@ -30,6 +30,8 @@
         <textarea ng-model="main.output" rows="5" class="form-control"></textarea>
         <button  class="btn btn-default" ng-click="main.extract()">提取左公因子</button>
         <textarea ng-model="main.extracleftoutput" rows="5" class="form-control"></textarea>
+        <button  class="btn btn-default" ng-click="main.findFirstSet()">提取first和follow集合</button>
+        <textarea ng-model="main.firfolsetoutput" rows="5" class="form-control"></textarea>
 
 
     </div>
@@ -113,5 +115,6 @@
 <script src="js/app.js"></script>
 <script src="js/big_show.js"></script>
 <script src="js/ExtractFactor.js"></script>
+<script src="js/FirstFollowSet.js"></script>
 </body>
 </html>
