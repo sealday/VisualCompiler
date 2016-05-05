@@ -32,6 +32,26 @@
         <textarea ng-model="main.extracleftoutput" rows="5" class="form-control"></textarea>
         <button  class="btn btn-default" ng-click="main.findFirstSet()">提取first和follow集合</button>
         <textarea ng-model="main.firfolsetoutput" rows="5" class="form-control"></textarea>
+        <button  class="btn btn-default" ng-click="main.generatePredict()">生成预测分析表</button>
+
+        <table class="table table-bordered">
+            <thead >
+            <tr>
+                <td>非终结符</td>
+                <td ng-repeat="terminal in main.predictterminal">{{terminal}}</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="grammar in main.predictgrammar">
+                <td>{{grammar.nonterminal}}</td>
+                <td ng-repeat="grammarbody in grammar.generate track by $index" >
+                    {{grammarbody}}
+                </td>
+            </tr>
+            </tbody>
+
+
+        </table>
     </div>
 
     <div class="panel panel-default">
@@ -114,5 +134,6 @@
 <script src="js/big_show.js"></script>
 <script src="js/ExtractFactor.js"></script>
 <script src="js/FirstFollowSet.js"></script>
+<script src="js/PredictTable.js"></script>
 </body>
 </html>

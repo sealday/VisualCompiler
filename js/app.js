@@ -17,9 +17,13 @@
             this.status = "STOPPED";
             this.parser = new EoLR();
             this.extractarith = new extractFactor();
-            this.firstFollowSet = new FirstSet();
+            this.firstsetresult = new FirstFollowSet();
+            this.predicttable = new PredictTable();
             this.output="";
             this.extracleftoutput = "";
+            this.firfolsetoutput="";
+            this.predictgrammar = [];
+            this.predictterminal=[];
         }
         
         _update() {
@@ -90,7 +94,59 @@
 
 
         findFirstSet(){
-            this.firstFollowSet._findFirst(this.extractarith.new_grammar);
+            this.firstsetresult._findFirst(this.extractarith.new_grammar);
+
+            let keyset = Object.keys(this.firstsetresult.first);
+                   for (var kn = 0; kn < keyset.length; kn++) {
+                       var valueset = this.firstsetresult.first[keyset[kn]];
+                       this.firfolsetoutput += keyset[kn] + ":{";
+                           for (var vn = 0; vn < valueset.length; vn++) {
+                               this.firfolsetoutput += valueset[vn] + ",";
+                                }
+                       this.firfolsetoutput += "}\n";
+                       }
+
+            this.firfolsetoutput += "follow集合:\n";
+
+            let keyset1 = Object.keys(this.firstsetresult.follow_set);
+                   for (var kn = 0; kn < keyset1.length; kn++) {
+                           var valueset = this.firstsetresult.follow_set[keyset1[kn]];
+                       this.firfolsetoutput += keyset1[kn] + ":{";
+                            for (var vn = 0; vn < valueset.length; vn++) {
+                                this.firfolsetoutput += valueset[vn] + ",";
+                               }
+                       this.firfolsetoutput += "}\n";
+                        }
+
+
+
+        }
+
+
+
+        generatePredict(){
+           this.predictgrammar = this.predicttable._predicttable(this.extractarith.new_grammar,this.firstsetresult.first,this.firstsetresult.follow_set);
+            this.predictterminal = this.predicttable.terminalset;
+            this.predictgrammar.forEach((current)=>{
+               for(let i =0;i<this.predicttable.terminalset.length;i++){
+                   if(current.generate[i].length == 0){
+                       current.generate[i] = "";
+                   }else{
+                       let allperdict = "";
+                       current.generate[i].forEach((currentsymbol)=>{
+                           let symbol ="";
+                           currentsymbol.forEach((currentsymbolper)=>{
+                               symbol+=currentsymbolper;
+                           });
+                           allperdict +=`${current.nonterminal}->${symbol}\n`;
+
+                       });
+                       current.generate[i]=allperdict;
+                   }
+               }
+            });
+
+            console.log(this.predictgrammar);
         }
 
         /**

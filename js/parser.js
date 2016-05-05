@@ -62,7 +62,7 @@
 
  the parseError function receives a 'hash' object with these members for lexer and parser errors: {
  text:        (matched text)
- token:       (the produced terminal token, if any)
+ token:       (the produced generate token, if any)
  line:        (yylineno)
  }
  while parser (_grammar) errors will also provide these members, i.e. parser errors deliver a superset of attributes: {
