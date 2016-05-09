@@ -5,7 +5,6 @@ import {Component, ElementRef, Output, EventEmitter} from '@angular/core';
     templateUrl: 'app/components/grammar.component.html',
     styleUrls: ['app/components/grammar.component.css']
 })
-
 export class GrammarComponent {
     @Output('grammar')
     grammarEmitter = new EventEmitter<string>();

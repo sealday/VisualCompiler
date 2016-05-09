@@ -1,7 +1,8 @@
 <div class="card">
-    <label>用入文法</label>
-    <p>用 -> 隔开产生式头部和尾部</p>
-    <p>注意符号之间需要用空格隔开</p>
+    <div>
+        <label>用入文法</label>
+        <p>用 -> 隔开产生式头部和尾部</p>
+        <p>注意符号之间需要用空格隔开</p>
 <textarea
         class="form-control"
         rows="10"
@@ -11,6 +12,7 @@
         (drop)="drop($event)"
         (keyup)="grammarChange(grammar)"
 ></textarea>
+    </div>
     <div>
         <!-- 可以通过 accept 属性来限制文件类型 -->
         <input type="file" (change)="fileSelected($event)">
