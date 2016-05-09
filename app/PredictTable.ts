@@ -1,16 +1,9 @@
-/**
- * Created by xiner on 16/5/4.
- */
-
-class PredictTable{
-    constructor(){
-        this.terminalset =[];
-        this.nonterminalset = [];
-        this.predictset = [];
-
-    }
-
-
+export class PredictTable{
+    terminalset = [];
+    nonterminalset = [];
+    predictset = [];
+    constructor(){ }
+    
     _predicttable(raw_grammar,first_set,follow_set){
     this.predictset =[];
 
@@ -18,7 +11,6 @@ class PredictTable{
             if(this._isNonterminal(current.head)){
                 if(this.nonterminalset.indexOf(current.head)==-1){
                     this.nonterminalset.push(current.head);
-
                 }
             }
 
@@ -82,9 +74,6 @@ class PredictTable{
         
         return this.predictset;
     }
-
-
-
 
     /**
      * 判断是否是大小写   以此来表示是终结符还是非终结符

@@ -4,7 +4,12 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "lite": "lite-server",
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "typings": "typings"
   },
   "repository": {
     "type": "git",
@@ -18,10 +23,18 @@
   "homepage": "https://github.com/sealday/VisualCompiler#readme",
   "devDependencies": {
     "electron-packager": "^7.0.1",
-    "electron-prebuilt": "^0.37.7"
+    "electron-prebuilt": "^0.37.7",
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings": "^0.8.1"
   },
   "dependencies": {
-    "bootstrap-slider": "^7.0.0",
-    "d3": "^3.5.16"
+    "angular": "^1.5.5",
+    "angular-animate": "^1.5.5",
+    "d3": "^3.5.16",
+    "es6-shim": "^0.35.0",
+    "lodash": "^4.12.0",
+    "systemjs": "^0.19.27"
   }
 }

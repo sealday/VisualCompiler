@@ -1,13 +1,10 @@
-/**
- * Created by xiner on 16/5/3.
- */
-class FirstFollowSet {
-    constructor() {
-        this.first = {};
-        this.map = {};
-        this.follow_set={};
-
-    }
+export class FirstFollowSet {
+    
+    first = {};
+    map = {};
+    follow_set = {};
+    
+    constructor() { }
 
     /**
      * 查找FIRST集合

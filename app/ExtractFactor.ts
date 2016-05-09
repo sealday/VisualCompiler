@@ -1,8 +1,7 @@
-/**
- * Created by xiner on 16/5/2.
- */
-
-class extractFactor {
+export class extractFactor {
+    
+    new_grammar = [];
+    
     constructor() {
 
     }
