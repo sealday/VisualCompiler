@@ -9,7 +9,8 @@
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
+    "typings": "typings",
+    "app": "electron main.js"
   },
   "repository": {
     "type": "git",
