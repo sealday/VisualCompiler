@@ -1,5 +1,7 @@
 (function(){
     'use strict';
+
+    let deepCopy = angular.copy;
     
     class MainController {
 
@@ -23,7 +25,11 @@
             this.extracleftoutput = "";
             this.firfolsetoutput="";
             this.predictgrammar = [];
+            
             this.predictterminal=[];
+
+            this.new_grammars = [];
+            this.predicttablestep = [];
         }
         
         _update() {
@@ -126,7 +132,9 @@
 
         generatePredict(){
            this.predictgrammar = this.predicttable._predicttable(this.extractarith.new_grammar,this.firstsetresult.first,this.firstsetresult.follow_set);
-            this.predictterminal = this.predicttable.terminalset;
+            let afterpredictgrammar = deepCopy(this.predictgrammar);
+
+                this.predictterminal = this.predicttable.terminalset;
             this.predictgrammar.forEach((current)=>{
                for(let i =0;i<this.predicttable.terminalset.length;i++){
                    if(current.generate[i].length == 0){
@@ -139,15 +147,57 @@
                                symbol+=currentsymbolper;
                            });
                            allperdict +=`${current.nonterminal}->${symbol}\n`;
-
+               
                        });
                        current.generate[i]=allperdict;
                    }
                }
+                
             });
+            
+            this._convertToMap(afterpredictgrammar,this.predictterminal);
 
-            console.log(this.predictgrammar);
         }
+        
+        _convertToMap(aftergrammar,terminalset){
+            let new_grammars =[];
+            aftergrammar.forEach((current)=>{
+                let new_grammar = {nonterminal:"", generate: []};
+                new_grammar.nonterminal = current.nonterminal;
+                for(let i = 0; i< current.generate.length;i ++){
+                   new_grammar.generate[terminalset[i]] = current.generate[i];
+
+                }
+                new_grammars.push(new_grammar);
+            });
+            console.log(new_grammars);
+            this.new_grammars = new_grammars;
+        }
+
+        /**
+         * 打印预测分析表步骤
+         */
+        predictTableStep(){
+            let predictAnalyse = new Predictanalyse();
+           this.predicttablestep =  predictAnalyse._predictanalyse(this.parser._grammar,this.new_grammars);
+        }
+
+        printarraybyindex(array){
+            let output = "";
+            array.forEach((current)=>{
+                output += current;
+            });
+            return output;
+        }
+
+        printarraybyindexreverse(array){
+            let output = "";
+            array.reverse().forEach((current)=>{
+                output += current;
+            });
+            return output;
+        }
+
 
         /**
          * 将结果打印在页面上

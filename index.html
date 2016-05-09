@@ -52,6 +52,34 @@
 
 
         </table>
+
+        <button  class="btn btn-default" ng-click="main.predictTableStep()">生成预测分析表步骤</button>
+        <table class="table table-bordered">
+            <thead >
+            <tr>
+                <td>已匹配</td>
+                <td>栈</td>
+                <td>输入</td>
+                <td>动作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="step in main.predicttablestep">
+                <td>{{step.hasmatch}}</td>
+                <td>
+                    {{main.printarraybyindexreverse(step.stack)}}
+                </td>
+                <td>
+                    {{main.printarraybyindex(step.input)}}
+                </td>
+                <td>{{step.action}}</td>
+
+            </tr>
+            </tbody>
+
+
+        </table>
+
     </div>
 
     <div class="panel panel-default">
@@ -135,5 +163,6 @@
 <script src="js/ExtractFactor.js"></script>
 <script src="js/FirstFollowSet.js"></script>
 <script src="js/PredictTable.js"></script>
+<script src="js/PredictAnalyse.js"></script>
 </body>
 </html>
