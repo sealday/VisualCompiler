@@ -1,0 +1,42 @@
+\documentclass{article}
+
+\usepackage{indentfirst}
+\usepackage{cite}
+% 如果启用下面这个，就会在目录上面加上颜色
+% \usepackage[colorlinks]{hyperref}
+\usepackage{hyperref}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+% 这边是重命名目录和摘要，但是不知道有没有更合适的方法
+% 比如要怎么单独明明呢，我需要俩个摘要
+\renewcommand{\contentsname}{\centerline{目录}}
+\renewcommand{\abstractname}{\centerline{摘要}}
+
+\title{编译原理可视化}
+\author{张琳}
+
+\begin{document}
+\maketitle
+\input{abstract.tex}
+\tableofcontents
+
+% 引入
+\input{intro.tex}
+% 技术背景
+\input{techbackground.tex}
+% 需求与功能点
+\input{needs.tex}
+% 技术架构
+\input{structure.tex}
+% 动画设计
+\input{animate.tex}
+% 测试
+\input{tests.tex}
+% 疏漏与总结
+\input{mistakes.tex}
+
+\begin{thebibliography}{0}
+\bibitem{compiler}
+A.A.A,2006.
+\end{thebibliography}
+\end{document}
