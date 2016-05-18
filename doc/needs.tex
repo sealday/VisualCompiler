@@ -1,25 +1,65 @@
 \section{需求和功能点}
 这个部分详细论述了需求和功能点，为了给读者提供一个更全面的课题介绍。
+
 \subsection{词法分析的动画设计}
 \begin{itemize}
-\item 词法分析动画设计，能够将词法单元、模式以及词素从动画上面说明清楚，
-  能够实现适当的提示，包括鼠标移动上去的提示，本身的字幕提示以及任何其
-  他合理的提示。
+\item 明辨词法单元、模式以及词素的动画，能够将词法单元、模式以及词素
+  从动画上面说明清楚，能够实现适当的提示，包括鼠标移动上去的提示，
+  本身的字幕提示以及任何其他合理的提示。
+  \begin{table}[!hbp]
+  	\centering
+  	\begin{tabular}{c|c|c}
+  		\hline
+  		词法单元 & 非正式描述 & 词素示例\\
+  		\hline
+  		if & 字符i、f & if\\
+  		\hline
+  		id & 字母开头的字母或数字串 & isPrepare\\
+  		\hline
+  		literal & 在俩个双引号之间的除双引号外的任意字符 & ``I'm done"\\
+		\hline
+  	\end{tabular}
+  	\caption{词法单元的例子}
+  \end{table}
+  \begin{figure}[!htb]
+  	\centering
+  	\includegraphics[width=0.7\linewidth]{img/lexical.png}
+  	\caption{当鼠标放上去的时候，应该显示橘黄色的内容}
+  	\label{fig:lexical.png}
+  \end{figure}
 \item 输入缓冲动画设计，说明清楚缓冲的作用，在动画中要能够清晰标明指针
   的位置，缓冲区的特点，能够让用户自定义输入文本的内容，也能够提供从不
   同的地方输入文本的内容的功能，详细的要求参见对文法输入的要求。可以提
   供一定的算法步骤，进行算法演示，这部分可选，因为输入缓冲的目的是让同
   学理解输入缓冲，而输入缓冲的算法实践本身比较简单。
+    \begin{figure}[!htb]
+    	\centering
+    	\includegraphics[width=0.7\linewidth]{img/buffer.png}
+    	\caption{动画应当演示begin和forward指针的移动}
+    	\label{fig:buffer.png}
+    \end{figure}
 \item 词法单元的归约的动画设计，使用动画来说明词法单元归约的各种名词，
   即通过一个动画，展示串的各个部分分别指的是哪些内容，通过动画，来说明
   语言上的运算是怎么样子的。这里可以适当加上对正则匹配过程的动画演示，
   可以参考已有的开源项目，不一定做成动画，可以做成匹配过程可以看到的匹
   配元素，就已经能够比较清晰说明正则匹配的内容。
+      \begin{figure}[!htb]
+      	\centering
+      	\includegraphics[width=0.7\linewidth]{img/reduction.png}
+      	\caption{用高亮标出匹配的词法单元，在鼠标悬浮在上面的时候显示正则表达式}
+      	\label{fig:reduction.png}
+      \end{figure}
 \item 词法单元的识别的动画设计，用一个动画，配合词素、词法单元名字、属
   性值的内容，来演示词法单元配合的时候应该如何去识别每一个词法单元，他
   们是怎么被标记出来的可以做出成动画，辅助一些流水线的效果。另外还需介
   绍基于状态转换图的词法分析的体系结构，这部分可以用动态的状态图来展示
   出来它的工作效果，可以辅以代码来查看当前执行的情况。
+        \begin{figure}[!htb]
+        	\centering
+        	\includegraphics[width=0.7\linewidth]{img/recognize.png}
+        	\caption{由人工输入（教师）状态图，演示特定词法单元如何匹配}
+        	\label{fig:recognize.png}
+        \end{figure}
 \item 有穷自动机的动画设计，这部分内容基础要求是通过算法步骤一步步展示
   如何进行子集构造，在这个基础上，应该能完成更高的目标，利用算法步骤得
   到的结果，来动态构造一个动态图。最后应该要点名字符串的算法效率，可以
@@ -34,14 +74,32 @@
   是能修正错误，而是如果发生文法和代码不匹配的情况，能够告之用户这俩者
   之间有不匹配的情况，可以根据后面的算法，指明在匹配到哪里的时候出现错
   误。
+          \begin{figure}[!htb]
+          	\centering
+          	\includegraphics[width=0.7\linewidth]{img/analyze.png}
+          	\caption{对给定文法、代码生成语法分析树，展示树展开的动画}
+          	\label{fig:analyze.png}
+          \end{figure}
 \item 左递归消除的动画设计，这部分动画应该直接包括直接左递归和间接左递
   归的情况。能够用动画展示出来算法的每一步骤针对的是哪些元素，并且可以
   指示算法当前进行到的位置，以及可以停止获取当前的各项变量的情况。
+            \begin{figure}[!htb]
+            	\centering
+            	\includegraphics[width=0.7\linewidth]{img/leftrecursive.png}
+            	\caption{动画中应表达出左递归消除进行的过程}
+            	\label{fig:leftrecursive.png}
+            \end{figure}
 \item 提取左公因子的动画设计，这个算法内容比较简单，动画可以按照算法的
   进程，演示每一个公因子被找到的过程以及被提取的过程。
 \item FIRST和FOLLOW集合构造的动画设计，根据构造FIRST集和FOLLOW集的算法，
   依次计算每一个非终结符号的集合，可以以多个集合图的方式来演示动画，表
   现出如何找到这些集合的过程。
+              \begin{figure}[!htb]
+              	\centering
+              	\includegraphics[width=0.4\linewidth]{img/first.png}
+              	\caption{将求first的回溯过程表现出来}
+              	\label{fig:first.png}
+              \end{figure}
 \item LL（1）文法的动画设计，对于这个文法，我们可以设计出一个简短的动
   画来说明它的内涵。另一个要求是做出它的预测分析表，用FIRST和FOLLOW集
   合来逐步构建一个，在动画中展示出，如何构建每一行每一列的元素，动画应

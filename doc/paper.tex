@@ -1,37 +1,116 @@
-\documentclass{article}
+\documentclass[a4paper]{article}
 
+\usepackage{geometry}
+\geometry{left=3.17cm,right=3.17cm,top=2.54cm,bottom=2.54cm}
+
+% 引入目录自定义包
+\usepackage{tocloft}
+% \renewcommand{\cftdot}{\ensuremath{\ast}}
+% 在序号前后分别添加第、章
+\renewcommand{\cftsecpresnum}{第}
+\renewcommand{\cftsecaftersnum}{章}
+% \setlength{\cftsecnumwidth}{10pt}
+% 让逗号变得密集一些，单位是字母
+\renewcommand{\cftdotsep}{1}
+% 设置数字区域的宽度
+\setlength{\cftsecnumwidth}{5em}
+%\renewcommand{\cftsetpnumwidth}{10em}
+%\setlength{\cftsecindent}{2em}
+%\setlength{\cftbeforesecskip}{2em}
+% 改变页码占据的宽度
+%\cftsetpnumwidth{10em}
+\usepackage[AutoFakeBold]{xeCJK}
+\setCJKmainfont{SimSun}
+\usepackage{setspace}
 \usepackage{indentfirst}
 \usepackage{cite}
+
+
+
 % 如果启用下面这个，就会在目录上面加上颜色
 % \usepackage[colorlinks]{hyperref}
 \usepackage{hyperref}
-\usepackage{xeCJK}
+% 这段直接粘贴过来的，我看没有问题就没有改
+\hypersetup{colorlinks,
+	linkcolor=black,
+	filecolor=black,
+	urlcolor=blue,
+	citecolor=black,
+	pdftitle={For Alstom},
+	pdfauthor={             },
+	pdfsubject={            },
+	pdfkeywords={           },
+	pdfproducer={ps2pdf} } 
 \usepackage{graphicx}
-% 这边是重命名目录和摘要，但是不知道有没有更合适的方法
-% 比如要怎么单独明明呢，我需要俩个摘要
+% 注意这个包必须在 geometry 下面
+% 否则不能正确计算页眉等宽度
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\chead{山东大学本科毕业论文}
+\lhead{}
+\rhead{}
+% 这边是重命名目录
+% 和摘要，但是不知道有没有更合适的方法
+% 比如要怎么单独明明呢，我需要俩个摘要【已解决】
 \renewcommand{\contentsname}{\centerline{目录}}
 \renewcommand{\abstractname}{\centerline{摘\ 要}}
 \renewcommand{\refname}{参考文献}
 \renewcommand{\figurename}{图}
 \renewcommand{\tablename}{表}
+\renewcommand{\partname}{\centering{}}
+\newcommand{\enabstractname}{Abstract}
+\newcommand{\cnabstractname}{摘要}
+%\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  %小四号 
 
-\title{编译原理可视化}
+
+\setCJKfamilyfont{hei}{SimHei} %黑体  hei  
+\newcommand{\hei}{\CJKfamily{hei}} % 黑体
+% 我真的是觉得这样的名字好听，还不用注释
+\newcommand{\小二}{\fontsize{18pt}{\baselineskip}\selectfont} 
+\newcommand{\小三}{\fontsize{15pt}{\baselineskip}\selectfont}
+\newcommand{\小四}{\fontsize{12pt}{\baselineskip}\selectfont}
+
+% 自己设置一个中文摘要和英文摘要的环境
+\newenvironment{enabstract}{
+	\par
+	\小四
+	\noindent\mbox{}\hfill{\bfseries \小三 \enabstractname}\hfill\mbox{}
+	\par
+	\vskip 2.5ex}
+{\par\vskip 2.5ex}
+\newenvironment{cnabstract}{
+	\par\小四
+	\noindent\mbox{}\hfill
+	{\bfseries \小三 \cnabstractname}
+	\hfill\mbox{}
+	\par
+	\vskip 2.5ex
+	}
+{\par\vskip 2.5ex}
+
+\title{编译原理可视化课件}
 \author{张琳}
 
 \begin{document}
-\maketitle
-\input{abstract.tex}
-
+\begin{spacing}{1.5}
+% 在正文前的页码是大写罗马字
+\pagenumbering{Roman}
+% 设置字体，寻找更好的方法
+\fontsize{12pt}{\baselineskip}\selectfont
 % 摘要和目录隔开
 \newpage
 \tableofcontents
 % 目录与正文隔开
 \newpage
 
-% 引入
+% 从摘要开始的页码是阿拉伯数字
+\pagenumbering{arabic}
+\input{abstract.tex}
+
+
+% 绪论
 \input{intro.tex}
-% 技术背景
-\input{techbackground.tex}
 % 需求与功能点
 \input{needs.tex}
 % 技术架构
@@ -40,11 +119,37 @@
 \input{animate.tex}
 % 测试
 \input{tests.tex}
-% 疏漏与总结
+% 总结
 \input{mistakes.tex}
 
+
+
+% 谢辞单独占一页
+\newpage
+\phantomsection
+\section*{\centerline{谢辞}}
+\addcontentsline{toc}{section}{谢辞}
+
+% 参考文献单独占一页
+\newpage
+\phantomsection
 \begin{thebibliography}{0}
 \bibitem{compiler}
-A.A.A,2006.
+编译原理与技术
 \end{thebibliography}
+\addcontentsline{toc}{section}{参考文献}
+
+\appendix
+% 每个附录单独占一页
+\newpage
+\section{附录}
+这里是附录这里是附录
+
+% 每个附录单独占一页
+\newpage
+\section{附录}
+这里是附录这里是附录
+
+\end{spacing}
 \end{document}
+
