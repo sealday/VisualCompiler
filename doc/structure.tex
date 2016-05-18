@@ -5,6 +5,12 @@
 作为可选的组件，大多数用户需要的数据都在前端利用HTML5中相应的技术存放，
 还可以通过另一个可选的组件，即包装这个web系统的桌面程序，存储到本地的
 文件数据库中。
+      \begin{figure}[!htb]
+      	\centering
+      	\includegraphics[width=0.7\linewidth]{img/structure.png}
+      	\caption{左边桌面浏览器，中间手机浏览器，右边桌面程序，右上可选的服务器，网页可以依托localstorage来存储，也可以借助服务器来存储}
+      	\label{fig:structure.png}
+      \end{figure}
 \subsection{具体架构}
 \paragraph{前端逻辑结构} 系统的前端使用了 angular 来组织，利用了
 angular中MVVM的架构特点，将前端系统模块化。在项目早期，我们几乎都是用
