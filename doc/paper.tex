@@ -25,7 +25,11 @@
 \usepackage{indentfirst}
 \usepackage{cite}
 
-
+% 引用pdf
+\usepackage{pdfpages}
+% 图片编号
+\usepackage{chngcntr}
+\counterwithin{figure}{subsection}
 
 % 如果启用下面这个，就会在目录上面加上颜色
 % \usepackage[colorlinks]{hyperref}
@@ -128,14 +132,59 @@
 \newpage
 \phantomsection
 \section*{\centerline{谢辞}}
+首先要感谢众多开源项目背后的团队，因为有了他们的努力，我们才能得以更快更好
+地开发出一个这样的系统，特别是angular、typescript、d3以及bootstrap背后的团队，
+还有我们用到的各种算法的来源的各位开发者，同样致以最真诚的谢意。最后，还要
+谢谢尽心辅导我们的指导老师，以及团队里的每一个成员，因为有了大家，最后才能
+完成这个项目。
 \addcontentsline{toc}{section}{谢辞}
 
 % 参考文献单独占一页
 \newpage
 \phantomsection
 \begin{thebibliography}{0}
+\bibitem{bootstrap}
+http://getbootstrap.com
+\bibitem{angular}
+https://angular.io
+\bibitem{typescript}
+https://www.typescriptlang.org
 \bibitem{compiler}
-编译原理与技术
+金龙飞. 通用可扩展编译器前端生成器的设计与实现[D].吉林大学,2005.
+\bibitem{compiler2}
+金龙飞,刘磊. 通用可扩展编译器前端生成器的设计与实现[J]. 吉林大学学报(理学版),2005,03:308-313.
+\bibitem{compiler3}
+张晶,杨冬,郭德贵,金英,刘磊. 编译原理实践课程教学方法研究[J]. 吉林大学学报(信息科学版),2005,S2:142-144.
+\bibitem{compiler4}
+徐红,陆红阳. 编译原理实验动态演示系统的设计与实现[J]. 电脑知识与技术,2005,27:86-88.
+\bibitem{compiler5}
+王馨梅,王冬芳. 编译器前端自动构造的研究与实现[J]. 微机发展,2004,04:82-83+88.
+\bibitem{compiler6}
+王强,冯雁. 编译原理算法的形象教学[J]. 计算机教育,2010,03:30-32.
+\bibitem{compiler7}
+朱恒伟,张明国,乔海泉. 对编译器前端生成器Front的语法和语义扩展[J]. 计算机工程与应用,2010,21:66-68.
+\bibitem{compiler8}
+王福. 基于Web的编译原理学习支撑系统的设计与实现[D].中南大学,2014.
+\bibitem{compiler9}
+李虎,杨晓津. LR语法分析器的可视化交互式动态仿真[J]. 系统仿真学报,2009,07:1866-1869.
+\bibitem{compiler10}
+张昱,陈意云,郭宇,李兆鹏. “编译原理”课程的教学内容选择的探讨[J]. 计算机教育,2009,18:143-146.
+\bibitem{compiler11}
+王挺,李梦君,周会平. 对编译原理课程教学中计算思维培养的探讨[J]. 计算机教育,2009,21:11-13.
+\bibitem{compiler12}
+张冬茉,方习文. 编译原理课程设计的教学实践与改革[J]. 实验室研究与探索,2012,11:134-137+153.
+\bibitem{compiler13}
+Eljas Soisalon-Soininen. On comparing LL ( k ) and LR ( k ) grammars[J]. Mathematical Systems Theory,1979,131:.
+\bibitem{compiler14}
+Terence John Parr,Russell W. Quong. LL and LR Translators Need k>1 Lookahead.[J]. SIGPLAN Notices,1996,31:.
+\bibitem{compiler15}
+John C. Beatty. On the relationship between LL(1) and LR(1) grammars.[J]. J. ACM,1982,29:.
+\bibitem{compiler16}
+Eljas Soisalon-Soininen. On Comparing LL(k) and LR(k) Grammars.[J]. Mathematical Systems Theory,1980,13:.
+\bibitem{compiler17}
+Wim Pijls. LR and LL parsing: some new points of view.[J]. SIGCSE Bulletin,2000,32:.
+\bibitem{compiler18}
+R. Gregory Taylor. LL parsing, LR parsing, complexity, and automata.[J]. SIGCSE Bulletin,2002,34:.
 \end{thebibliography}
 \addcontentsline{toc}{section}{参考文献}
 
@@ -144,6 +193,7 @@
 \newpage
 \section{附录}
 这里是附录这里是附录
+\includegraphics[width=\linewidth]{jaccie.ps}
 
 % 每个附录单独占一页
 \newpage
