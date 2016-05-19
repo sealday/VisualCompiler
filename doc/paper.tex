@@ -18,6 +18,10 @@
 \usepackage{chngcntr}
 % 启用目录链接
 \usepackage{hyperref}
+% 引入图片的库
+\usepackage{graphicx}
+% 页眉页脚设置的库
+\usepackage{fancyhdr}
 
 
 % 设置页边距
@@ -46,10 +50,7 @@
 	filecolor=black,
 	urlcolor=blue,
 	citecolor=black}
-% 引入图片的库
-\usepackage{graphicx}
-% 页眉页脚设置的库
-\usepackage{fancyhdr}
+
 % 使其生效
 \pagestyle{fancy}
 % 详细设置
@@ -64,7 +65,7 @@
 \renewcommand{\partname}{\centering{}}
 % 创建俩个命令的名字
 \newcommand{\enabstractname}{Abstract}
-\newcommand{\cnabstractname}{摘要}
+\newcommand{\cnabstractname}{中文摘要}
 % 自定义字号
 \newcommand{\小二}{\fontsize{18pt}{\baselineskip}\selectfont} 
 \newcommand{\小三}{\fontsize{15pt}{\baselineskip}\selectfont}
