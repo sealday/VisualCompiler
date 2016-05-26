@@ -23,15 +23,14 @@
 % 页眉页脚设置的库
 \usepackage{fancyhdr}
 
-
 % 设置页边距
 \geometry{left=3.17cm,right=3.17cm,top=2.54cm,bottom=2.54cm}
 % 在数字序号前加“第”
-\renewcommand{\cftsecpresnum}{第}
+% \renewcommand{\cftsecpresnum}{第}
 % 在数字序号后加“章”
-\renewcommand{\cftsecaftersnum}{章}
+% \renewcommand{\cftsecaftersnum}{章}
 % 设置数字序号区域的宽度
-\setlength{\cftsecnumwidth}{5em}
+% \setlength{\cftsecnumwidth}{5em}
 % 让点变得密集
 \renewcommand{\cftdotsep}{1}
 % 设置宋体
@@ -115,7 +114,7 @@
 \input{structure.tex}
 % 动画设计
 \input{animate.tex}
-% 测试
+% 实现与测试
 \input{tests.tex}
 % 总结
 \input{mistakes.tex}
@@ -179,14 +178,11 @@ Wim Pijls. LR and LL parsing: some new points of view.[J]. SIGCSE Bulletin,2000,
 R. Gregory Taylor. LL parsing, LR parsing, complexity, and automata.[J]. SIGCSE Bulletin,2002,34:.
 \end{thebibliography}
 \addcontentsline{toc}{section}{参考文献}
-
 \appendix
 % 每个附录单独占一页
 \newpage
 \input{appendix_en.tex}
-
 % 每个附录单独占一页
 \newpage
 \input{appendix_zh.tex}
-
 \end{document}
