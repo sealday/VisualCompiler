@@ -1,14 +1,17 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
 .item-listing.ng-enter {
     animation: fadeIn 1s;
 }
 
 .item-listing.ng-leave {
     animation: fadeOut 1s;
-}
-
-
-body {
-    padding-top: 60px;
 }
 
 #ex1Slider .slider-selection {
@@ -40,4 +43,9 @@ text {
 span.current {
     display: block;
     background-color: red;
+}
+
+
+.panel + .panel {
+    margin-top: 2em;
 }

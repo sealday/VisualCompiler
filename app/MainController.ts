@@ -25,6 +25,8 @@ export class MainController {
     predicttablestep: Array<any>;
     new_grammars:Array<any>;
 
+    grammarname: string;
+
     constructor($scope) {
         this.lines = [
             "按照某个顺序将非终结符号排序为 A1,A2,...,An\n",
@@ -46,6 +48,7 @@ export class MainController {
         this.firfolsetoutput="";
         this.predictgrammar = [];
         this.predictterminal=[];
+        this.grammarname = "未命名"
     }
 
     _update() {
@@ -144,6 +147,11 @@ export class MainController {
 
     }
 
+    upload() {
+        console.log("hello world");
+        let uploadButton: any = document.querySelector("#upload")
+        uploadButton.click();
+    }
 
 
     generatePredict(){

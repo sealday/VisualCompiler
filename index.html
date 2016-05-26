@@ -23,72 +23,137 @@
     </script>
 </head>
 <body>
-<div class="container">
-    <div class="panel panel-default" ng-controller="MainController as main">
-        <input  type="file" file-change="main.fileHandler(result)">
-        <textarea ng-model="main.input" rows="5" class="form-control"></textarea>
-        <div class="panel-heading">
-            <h3 class="panel-title">控制栏</h3>
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">编译原理</a>
         </div>
-        <div class="panel-body">
-            <button ng-if="main.canAnalyze()" class="btn btn-default" ng-click="main.analyze()">分析文法</button>
-            <button ng-if="!main.canAnalyze()" class="btn btn-default" ng-click="main.stop()">停止</button>
-            <button class="btn btn-default" ng-click="main.prev()" ng-disabled="!main.canPrev()">上一步</button>
-            <button class="btn btn-default" ng-click="main.next()" ng-disabled="!main.canNext()">下一步</button>
-            <p class="pull-right">{{main.text}}</p>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 left-nav">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#">编译原理概述</a></li>
+                <li><a href="#">词法分析</a></li>
+                <li class="active"><a href="#">语法分析</a></li>
+                <li><a href="#">自定义文法生成器</a></li>
+                <li><a href="#">语法制导的翻译</a></li>
+                <li><a href="#">中间代码</a></li>
+            </ul>
         </div>
-        <pre><span ng-repeat="line in main.lines" ng-class="$index == main.lineNumber ? 'current' : ''">{{line}}</span></pre>
-        <textarea ng-model="main.output" rows="5" class="form-control"></textarea>
-        <button  class="btn btn-default" ng-click="main.extract()">提取左公因子</button>
-        <textarea ng-model="main.extracleftoutput" rows="5" class="form-control"></textarea>
-        <button  class="btn btn-default" ng-click="main.findFirstSet()">提取first和follow集合</button>
-        <textarea ng-model="main.firfolsetoutput" rows="5" class="form-control"></textarea>
-        <button  class="btn btn-default" ng-click="main.generatePredict()">生成预测分析表</button>
+        <div class="col-md-10">
+            <div ng-controller="MainController as main">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">文法录入</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div style="margin-bottom: 1em" class="form-inline">
+                            <button class="btn btn-default" ng-click="main.upload()">上传</button>
+                            <label class="control-label">当前文法</label>
+                            <input class="form-control" ng-model="main.grammarname">
+                            <button class="btn btn-default">保存</button>
+                            <button class="btn btn-default">删除</button>
+                            <button class="btn btn-default">选择文法</button>
+                        </div>
+                        <input id="upload" style="display: none" type="file" file-change="main.fileHandler(result)">
+                        <textarea ng-model="main.input" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">控制栏</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group" style="margin-bottom: 1em;">
+                            <button ng-if="main.canAnalyze()" class="btn btn-default" ng-click="main.analyze()">分析文法</button>
+                            <button ng-if="!main.canAnalyze()" class="btn btn-default" ng-click="main.stop()">停止</button>
+                            <button class="btn btn-default" ng-click="main.prev()" ng-disabled="!main.canPrev()">上一步</button>
+                            <button class="btn btn-default" ng-click="main.next()" ng-disabled="!main.canNext()">下一步</button>
+                        </div>
+                        <span>{{main.text}}</span>
+                        <pre><span ng-repeat="line in main.lines" ng-class="$index == main.lineNumber ? 'current' : ''">{{line}}</span></pre>
+                        <textarea ng-model="main.output" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">提取左公因子</h3>
+                    </div>
+                    <div class="panel-body">
+                    <div class="btn-group" style="margin-bottom: 1em;">
+                            <button  class="btn btn-default" ng-click="main.extract()">提取</button>
+                        </div>
+                        <textarea ng-model="main.extracleftoutput" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">First 和 Follow 集合</h3>
+                    </div>
+                    <div class="panel-body">
+                    <div class="btn-group" style="margin-bottom: 1em;">
+                            <button  class="btn btn-default" ng-click="main.findFirstSet()">提取first和follow集合</button>
+                        </div>
+                        <textarea ng-model="main.firfolsetoutput" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
 
-        <table class="table table-bordered">
-            <thead >
-            <tr>
-                <td>非终结符</td>
-                <td ng-repeat="terminal in main.predictterminal">{{terminal}}</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="grammar in main.predictgrammar">
-                <td>{{grammar.nonterminal}}</td>
-                <td ng-repeat="grammarbody in grammar.generate track by $index" >
-                    {{grammarbody}}
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <button  class="btn btn-default" ng-click="main.predictTableStep()">生成预测分析表步骤</button>
-        <table class="table table-bordered">
-            <thead >
-            <tr>
-                <td>已匹配</td>
-                <td>栈</td>
-                <td>输入</td>
-                <td>动作</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="step in main.predicttablestep">
-                <td>{{step.hasmatch}}</td>
-                <td>
-                    {{main.printarraybyindexreverse(step.stack)}}
-                </td>
-                <td>
-                    {{main.printarraybyindex(step.input)}}
-                </td>
-                <td>{{step.action}}</td>
-
-            </tr>
-            </tbody>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">预测分析表</h3>
+                    </div>
 
 
-        </table>
+                    <div class="panel-body">
+                        <div class="btn-group" style="margin-bottom: 1em;">
+                            <button class="btn btn-default" ng-click="main.generatePredict()">生成预测分析表</button>
+                            <button class="btn btn-default" ng-click="main.predictTableStep()">生成预测分析表步骤</button>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead >
+                                <tr>
+                                    <td>非终结符</td>
+                                    <td ng-repeat="terminal in main.predictterminal">{{terminal}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="grammar in main.predictgrammar">
+                                    <td>{{grammar.nonterminal}}</td>
+                                    <td ng-repeat="grammarbody in grammar.generate track by $index" >
+                                        {{grammarbody}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
+                        <table class="table table-bordered">
+                            <thead >
+                                <tr>
+                                    <td>已匹配</td>
+                                    <td>栈</td>
+                                    <td>输入</td>
+                                    <td>动作</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="step in main.predicttablestep">
+                                    <td>{{step.hasmatch}}</td>
+                                    <td>
+                                        {{main.printarraybyindexreverse(step.stack)}}
+                                    </td>
+                                    <td>
+                                        {{main.printarraybyindex(step.input)}}
+                                    </td>
+                                    <td>{{step.action}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
