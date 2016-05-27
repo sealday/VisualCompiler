@@ -3,7 +3,6 @@
     "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#ca92a5b250433c38230b5f4138b36453862342bf",
     "angular-animate": "registry:dt/angular-animate#1.5.0+20160407085121",
     "d3": "registry:dt/d3#0.0.0+20160317120654",
-    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
     "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#ca92a5b250433c38230b5f4138b36453862342bf"
   },
