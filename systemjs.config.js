@@ -7,6 +7,9 @@
         'angular': 'node_modules/angular',
         'lodash': 'node_modules/lodash',
         'angular-animate': 'node_modules/angular-animate',
+        'ui.router': 'node_modules/angular-ui-router',
+        'jquery': 'node_modules/jquery',
+        'bootstrap': 'node_modules/bootstrap',
         'dist': 'dist' // 'dist',
         
     };
@@ -17,7 +20,10 @@
         'd3': { main: 'd3.js',  defaultExtension: 'js' },
         'angular': { main: 'index.js',  defaultExtension: 'js' },
         'angular-animate': { main: 'index.js',  defaultExtension: 'js' },
-        'lodash': { main: 'index.js',  defaultExtension: 'js' }
+        'lodash': { main: 'index.js',  defaultExtension: 'js' },
+        'jquery': { main: 'dist/jquery.min.js',  defaultExtension: 'js' },
+        'bootstrap': { main: 'dist/js/bootstrap.min.js',  defaultExtension: 'js' },
+        'ui.router': { main: 'release/angular-ui-router.min.js', defaultExtension: 'js'}
     };
     var config = {
         map: map,
