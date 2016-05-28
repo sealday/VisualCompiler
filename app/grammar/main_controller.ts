@@ -1,10 +1,11 @@
-import {EoLR} from "./EoLR";
-import {extractFactor} from "./ExtractFactor";
-import {FirstFollowSet} from "./FirstFollowSet";
-import {PredictTable} from "./PredictTable";
+import {EoLR} from "./eolr";
+import {extractFactor} from "./extract_factor";
+import {FirstFollowSet} from "./first_follow_set";
+import {PredictTable} from "./predict_table";
 import {Phase} from "./phase";
-import {Predictanalyse} from "./PredictAnalyse";
+import {Predictanalyse} from "./predict_analyse";
 
+// TODO 应该改成 GrammarController
 export class MainController {
     lines = [];
     status = "STOPPED";
