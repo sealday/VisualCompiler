@@ -2,21 +2,21 @@ import "jquery";
 import "bootstrap";
 
 // 搞不懂为什么引入 jquery 会导致 angular 找不到模块
-delete window['$'];
-delete window['jQuery'];
+// delete window['$'];
+// delete window['jQuery'];
 
-import * as angular from "angular";
-import { MainController } from "./grammar/main_controller";
-import { fileChange } from "./directives/file-change";
+import "angular";
 import "angular-animate";
 import "ui.router";
+import { MainController } from "./grammar/main_controller";
+import { fileChange } from "./directives/file-change";
 
 
 
 angular
     .module('VisualCompiler', ['ngAnimate', 'ui.router'])
     .directive('fileChange', fileChange)
-    .config(($stateProvider, $urlRouterProvider) => {
+    .config(($stateProvider, $urlRouterProvider, $locationProvider) => {
 		$stateProvider
 			// 语法分析页面
 			.state('grammar', {
@@ -39,4 +39,9 @@ angular
 		// 默认路径设置为 home
 		$urlRouterProvider.otherwise('/home');
 
+		// 在路径的 # 前面加个 ! 作为提示和传统的 # 作用不一样
+		$locationProvider.hashPrefix('!');
     });
+
+
+angular.bootstrap("body", ["VisualCompiler"]);
