@@ -39,11 +39,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">信息</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">未登录 <span class="caret"></span></a>
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">未登录 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                       <li><a href="#">个人信息</a></li>
                       <li><a href="#">其他</a></li>
-                      <li><a href="#">其他</a></li>
+                      <li><a href="#">其他</a></<li></li>>
                       <li role="separator" class="divider"></li>
                       <li><a href="#">退出</a></li>
                   </ul>
@@ -59,9 +59,10 @@
                 <li ui-sref-active="active"><a ui-sref="home">系统概述</a></li>
                 <li ui-sref-active="active"><a ui-sref="lexical">词法分析</a></li>
                 <li ui-sref-active="active"><a ui-sref="grammar">语法分析</a></li>
-                <li ui-sref-active="active"><a ui-sref="a">自定义文法生成器</a></li>
-                <li ui-sref-active="active"><a ui-sref="a">语法制导的翻译</a></li>
-                <li ui-sref-active="active"><a ui-sref="a">中间代码</a></li>
+                <li ui-sref-active="active"><a ui-sref="#">语义分析</a></li>
+                <li ui-sref-active="active"><a ui-sref="#">类型推导</a></li>
+                <li ui-sref-active="active"><a ui-sref="#">代码优化</a></li>
+                <li ui-sref-active="active"><a ui-sref="#">机器代码生成</a></li>
             </ul>
         </div>
         <div class="col-md-10">

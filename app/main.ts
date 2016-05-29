@@ -7,14 +7,18 @@ import "bootstrap";
 
 import "angular";
 import "angular-animate";
+import "angular-sanitize";
+import "angular-ui-bootstrap";
 import "ui.router";
+import "lodash";
 import { MainController } from "./grammar/main_controller";
+import { LexicalController } from "./lexical/lexical_controller";
 import { fileChange } from "./directives/file-change";
 
 
 
 angular
-    .module('VisualCompiler', ['ngAnimate', 'ui.router'])
+    .module('VisualCompiler', ['ngAnimate', 'ui.router', 'ngSanitize', 'ui.bootstrap'])
     .directive('fileChange', fileChange)
     .config(($stateProvider, $urlRouterProvider, $locationProvider) => {
 		$stateProvider
@@ -28,7 +32,9 @@ angular
 			// 词法分析页面
 			.state('lexical', {
 				url: '/lexical',
-				templateUrl: '/app/lexical/index.html'
+				templateUrl: '/app/lexical/index.html',
+				controller: LexicalController,
+				controllerAs: 'lc'
 			})
 			// 首页，用于介绍这个系统的情况
 			.state('home', {

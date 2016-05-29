@@ -243,7 +243,7 @@ export class MainController {
 
     printarraybyindexreverse(array){
         let output = "";
-        array.reverse().forEach((current)=>{
+        array.slice(0).reverse().forEach((current)=>{
             output += current;
         });
         return output;

@@ -1,3 +1,101 @@
-<h3>
-	词法分析
-</h3>
+<h3>词法分析</h3>
+
+
+<!-- {{{ 词法单元 -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">词法单元</h3>
+	</div>
+	<div class="panel-body">
+		<table class="table">
+			<caption>词法单元的例子</caption>
+			<tr>
+				<th>词法单元</th>
+				<th>非正式描述</th>
+				<th>词素示例</th>
+			</tr>
+			<tr>
+				<td>if</td>
+				<td>字符i，f</td>
+				<td>if</td>
+			</tr>
+			<tr>
+				<td>else</td>
+				<td>字符e，l，s，e</td>
+				<td>else</td>
+			</tr>
+			<tr>
+				<td>comparison</td>
+				<td>&lt; 或 &gt; 或 &lt;= 或 &gt;= 或 == 或 !=</td>
+				<td>&lt;=，!=</td>
+			</tr>
+			<tr>
+				<td>id</td>
+				<td>字母开头的字母/数字串</td>
+				<td>pi，score，d2</td>
+			</tr>
+			<tr>
+				<td>number</td>
+				<td>任何数字常量</td>
+				<td>3.1415959</td>
+			</tr>
+			<tr>
+				<td>literal</td>
+				<td>在两个 " 之间，除 " 以外的任何字符</td>
+				<td>"core dumped"</td>
+			</tr>
+		</table>
+		<div >
+			<label>在这里输入来了解词法单元</label>
+			<textarea class="form-control" rows="6" ng-model="lc.raw_sentences"></textarea>
+		</div>
+		<div style="margin-top: 1em;">
+			<ul class="list-unstyled">
+				<li ng-repeat="sentence in lc.sentences track by $index">
+					<span ng-repeat="word in sentence track by $index">
+						<code ng-if="!word.ns" uib-tooltip="{{word.n}}">{{word.w}}</code>
+						<span ng-if="word.ns">{{word.w}}</span>
+					</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- }}} 词法单元 -->
+
+<!-- {{{ 输入缓冲 -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">输入缓冲</h3>
+	</div>
+	<div class="panel-body">
+		<div class="form-inline">
+			<label>
+				缓冲字符串
+				<input class="form-control" ng-model="lc.bufferString">
+			</label>
+			<button class="btn btn-default" ng-click="lc.spliteBuffer()">模拟</button>
+		</div>
+		<div>
+			{{lc.charArray}}
+		</div>
+		<div id="input-buffer">
+		</div>
+
+		<div>
+			<ul>
+				<li ng-repeat="char in lc.charArray track by $index">{{char}}</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- }}} 输入缓冲 -->
+
+<!-- 有穷自动机与正则表达式 -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">有穷自动机与正则表达式</h3>
+	</div>
+	<iframe src="/vendor/noam/webapps/fsm_simulator/index.html" style="width: 100%; height: 800px; border: none; overflow: hidden; padding: 0;"></iframe>
+</div>
+<!-- -->
