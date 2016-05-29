@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>有穷自动机与正则表达式</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" />
+    <link rel="stylesheet" href="styles/fsm_simulator.css" />
+    <style type="text/css">
+
+    body {
+      padding-top: 0;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="container controls">
+        <div class="row-fluid">
+          <div class="span6 column">
+            <h3> &#x2460; 创建自动机</h3>
+            <ul class="nav nav-tabs">
+              <li id="regexinput" class="active"><a href="#tab1" data-toggle="tab">输入正则表达式</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab1">
+                <div class="instructions">
+                  <p>暂时只支持基本的数字和字母，外加上+，*，(，),另外，用$表示空，也是暂时。</p>
+                </div>
+
+                <p>
+                  <button id="generateRegex" class="btn">生成随机正则表达式</button>
+                </p>
+
+                <p>
+                  <div class="control-group">
+                    <input id="regex" type="text" class="input-block-level" placeholder="也许你喜欢自己写" spellcheck="false">
+                  </div>
+                </p>
+              </div>
+            </div>
+            <p id="fsmError" class="text-error"></p>
+            <button id="createAutomaton" class="btn" disabled>创建自动机</button>
+
+          </div>
+
+          <div class="span6 column">
+            <h3> &#x2461; 自动机模拟运算 </h3>
+
+            <div class="instructions">
+              <p>可以点击上面一排按钮，来随机一个字符串</p>
+              <p>然后点击开始就可以开始了</p>
+              <p>这里是一些说明</p>
+              <p>其实我只是为了布局</p>
+            </div>
+
+            <div class="btn-group">
+              <button id="generateRandomString" class="btn" disabled> 随机的 </button>
+              <button id="generateRandomAcceptableString" class="btn" disabled> 可以通过的 </button>
+              <button id="generateRandomUnacceptableString" class="btn" disabled> 以及不可以通过的字符串 </button>
+            </div>
+
+            <p>
+              <div class="control-group">
+                <input id="inputString" type="text" class="input-block-level" placeholder="写点来测试一下吧" disabled spellcheck="false">
+              </div>
+            </p>
+
+            <div class="btn-group">
+              <button id="startStop" class="btn" disabled>
+               开始 
+              </button>
+              <button id="inputFirst" class="btn" disabled>
+                <i class="icon-fast-backward"></i>
+               重置 
+              </button>
+              <button id="inputPrevious" class="btn" disabled>
+                <i class="icon-backward"></i>
+              后退 
+              </button>
+              <button id="inputNext" class="btn" disabled>
+                <i class="icon-forward"></i>
+               前进 
+              </button>
+              <button id="inputLast" class="btn" disabled>
+                <i class="icon-fast-forward"></i>
+               一次性 
+              </button>
+            </div>
+
+            <p id="inputError" class="text-error">
+            </p>
+
+          </div>
+        </div>
+
+        <hr />
+      </div>
+
+      <div class="container graph">
+        <h3> &#x2462; 转换图</h3>
+        <p>注意，以粉红色来标明当前的状态</p>
+        <div id="automatonGraph">亲，不好意思，还没有生成</div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <script src="http://mdaines.github.io/viz.js/bower_components/viz.js/viz.js"></script>
+    <script src="../../lib/browser/noam.js"></script>
+    <script src="scripts/fsm_simulator.js"></script>
+  </body>
+</html>
