@@ -1,29 +1,37 @@
+import {Phase} from "./phase";
 /**
  * Created by xiner on 16/5/7.
  */
 
 export class Predictanalyse{
-    input = ["i","+","i", "*" ,"i","$"];
     predictTable = [];
+    _phrase=[];
     constructor(){ }
 
-    _predictanalyse(raw_grammar,predictset){
+    _predictanalyse(raw_grammar,predictset,input){
+        this._phrase=[];
         let predictTableRaw = {hasmatch:"",stack:[],input:[],action:""};
 
         let stack = [];
         let count =0;
-        predictTableRaw.input = this.input;
-        let a = this.input[count];
+        predictTableRaw.input = input;
+        let a = input[count];
         let X = raw_grammar[0].head;
         stack.push("$");
+        this._phrase.push(new Phase("将输入指针ip指向缓冲区的第一个符号", {line: 0}));
+
         stack.push(X);
+        this._phrase.push(new Phase("将X设为栈顶符号", {line: 1}));
         predictTableRaw.stack.push("$");
         predictTableRaw.stack.push(X);
         this.predictTable.push(predictTableRaw);
+        this._phrase.push(new Phase("", {line: 2}));//while循环那一行
         while (X != "$"){
             let predictTableRawcycle = {hasmatch:"",stack:[],input:[],action:""};
 
             if(X == a){
+                this._phrase.push(new Phase("如果X等于a,执行弹出栈操作", {line: 3}));
+
                 predictTableRawcycle.hasmatch = this.predictTable[this.predictTable.length -1].hasmatch+stack[stack.length-1];
                 predictTableRawcycle.action = `匹配 ${stack[stack.length-1]}`;
                 stack.pop();
@@ -31,23 +39,31 @@ export class Predictanalyse{
                 if(a != "$"){
                     count = count+1;
                 }
-                predictTableRawcycle.input = this.input.slice(count);
+                predictTableRawcycle.input = input.slice(count);
 
-                a = this.input[count];
+                a = input[count];
 
             }else if(!this._isNonterminal(X)){
+                this._phrase.push(new Phase("如果X是终结符,报错", {line: 4}));
+
                 throw new Error("this is a teminal symbol");
             }else{
+                this._phrase.push(new Phase("如果M[X,a]=X->Y1 Y2 ...Yk", {line: 5}));
+
                 stack.pop();
+                this._phrase.push(new Phase("弹出栈顶符号", {line: 7}));
+
                 let getGenerate = this._getGenerate(predictset,X,a);
                 if(getGenerate != "empty"){
+                    this._phrase.push(new Phase("将Y1,Y2,Y3...压入栈中,其中Y1位于栈顶", {line: 8}));
+
                     for(let i = getGenerate.length-1; i >= 0;i--){
                         stack.push(getGenerate[i]);
                     }
                 }
 
                 predictTableRawcycle.stack = angular.copy(stack,predictTableRawcycle.stack);
-                predictTableRawcycle.input = this.input.slice(count);
+                predictTableRawcycle.input = input.slice(count);
 
                 let outputgen = `${X}->`;
                 this._getGenerate(predictset,X,a).forEach((current)=>{
@@ -60,7 +76,9 @@ export class Predictanalyse{
             }
 
             this.predictTable.push(predictTableRawcycle);
-                X = stack[stack.length -1];
+            this._phrase.push(new Phase("令X=栈顶符号", {line: 11}));
+
+            X = stack[stack.length -1];
 
         }
         return this.predictTable;
@@ -91,5 +109,12 @@ export class Predictanalyse{
               return  predictset[i].generate[a][0];//这个地方不考虑二义性的问题
             }
         }
+    }
+
+
+    _parseUserinput(userinput){
+        let elements = userinput.split(" ");
+        elements.push("$");
+        return elements;
     }
 }

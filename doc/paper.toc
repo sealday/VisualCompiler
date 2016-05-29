@@ -1,0 +1,52 @@
+\contentsline {section}{摘要}{1}{section*.1}
+\contentsline {section}{Abstract}{2}{section*.2}
+\contentsline {section}{\numberline {1}绪论}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}选题背景}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}选题目标}{3}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}主要目标}{3}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}附属目标}{4}{subsubsection.1.2.2}
+\contentsline {subsection}{\numberline {1.3}技术背景}{4}{subsection.1.3}
+\contentsline {subsubsection}{\numberline {1.3.1}基础框架与开发工具}{4}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}课题相关技术}{5}{subsubsection.1.3.2}
+\contentsline {paragraph}{简述}{5}{section*.3}
+\contentsline {paragraph}{词法分析器}{5}{section*.4}
+\contentsline {paragraph}{语法分析器}{5}{section*.5}
+\contentsline {subsubsection}{\numberline {1.3.3}测试技术}{6}{subsubsection.1.3.3}
+\contentsline {section}{\numberline {2}需求和功能点}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}词法分析的动画设计}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}语法分析的动画设计}{9}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}文法管理}{11}{subsection.2.3}
+\contentsline {section}{\numberline {3}技术架构}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}基本情况}{11}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}具体架构}{11}{subsection.3.2}
+\contentsline {paragraph}{前端逻辑结构}{11}{section*.6}
+\contentsline {paragraph}{前端界面}{12}{section*.7}
+\contentsline {paragraph}{数据存储}{13}{section*.8}
+\contentsline {paragraph}{本地应用}{13}{section*.9}
+\contentsline {paragraph}{手机扩展}{13}{section*.10}
+\contentsline {paragraph}{后台及前后台交互}{14}{section*.11}
+\contentsline {section}{\numberline {4}动画设计}{14}{section.4}
+\contentsline {subsection}{\numberline {4.1}动画的表现形式}{14}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}动画设计的基本要求}{14}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}设计的几类动画}{15}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}如何设计这些动画}{16}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}动画交互的要点}{17}{subsection.4.5}
+\contentsline {section}{\numberline {5}实现与测试}{17}{section.5}
+\contentsline {subsection}{\numberline {5.1}界面测试}{18}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}单元测试}{19}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}算法测试}{20}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}系统测试}{20}{subsection.5.4}
+\contentsline {section}{\numberline {6}总结}{21}{section.6}
+\contentsline {subsection}{\numberline {6.1}代码复用}{21}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}项目结构}{21}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}前人的研究}{21}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}课题本身的局限性}{22}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}内容的欠缺}{22}{subsection.6.5}
+\contentsline {section}{谢辞}{24}{section*.13}
+\contentsline {section}{参考文献}{26}{section*.15}
+\contentsline {section}{\numberline {A} 英文原文}{27}{appendix.A}
+\contentsline {section}{\numberline {B}中文译文}{32}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}绪论}{32}{subsection.B.1}
+\contentsline {subsection}{\numberline {B.2}编译器和编译器生成器的架构}{33}{subsection.B.2}
+\contentsline {subsection}{\numberline {B.3}在可视化编译器执行的时候}{35}{subsection.B.3}
+\contentsline {subsection}{\numberline {B.4}结论：相关工作和未来的计划}{37}{subsection.B.4}

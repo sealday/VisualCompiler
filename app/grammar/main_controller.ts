@@ -4,12 +4,16 @@ import {FirstFollowSet} from "./first_follow_set";
 import {PredictTable} from "./predict_table";
 import {Phase} from "./phase";
 import {Predictanalyse} from "./predict_analyse";
+import {ExtractFactorMachine} from "./extract_factor_machine";
+import {Machine} from "./Machine";
+import {PredictAnalyseMachine} from "./predict_analyse_machine";
 
 // TODO 应该改成 GrammarController
 export class MainController {
-    lines = [];
+    predictlines=[];
     status = "STOPPED";
-    parser = new EoLR();
+    parser:EoLR;
+    predictAnalyse:Predictanalyse;
     extractarith = new extractFactor();
     firstsetresult = new FirstFollowSet();
     predicttable = new PredictTable();
@@ -18,28 +22,19 @@ export class MainController {
     firfolsetoutput = "";
     predictgrammar = [];
     predictterminal = [];
-    text = "";
     phases: Phase[];
     phase: number;
-    lineNumber: number;
     input = "";
     predicttablestep: Array<any>;
     new_grammars:Array<any>;
+    predictuserinput ="";
+    machines: Map<string, Machine> = new Map<string, Machine>();
+
 
     grammarname: string;
 
-    constructor($scope) {
-        this.lines = [
-            "按照某个顺序将非终结符号排序为 A1,A2,...,An\n",
-            "for ( 从 1 到 n 的每个 i ) { \n",
-            "    for ( 从 1 到 i - 1 的每个 j ) {\n",
-            "        将每个形如Ai -> Ajγ的产生式替换为产生式组 Ai -> δ1γ | δ2γ | ... | δkγ \n",
-            "        其中Aj -> δ1 | δ2 | ... | δk 是所有的 Aj 的产生式\n",
-            "    }\n",
-            "    消除Ai 产生式之间的立即左递归\n",
-            "}\n"
-        ];
-        this.status = "STOPPED";
+    constructor() {
+
         this.parser = new EoLR();
         this.extractarith = new extractFactor();
         this.firstsetresult = new FirstFollowSet();
@@ -49,62 +44,67 @@ export class MainController {
         this.firfolsetoutput="";
         this.predictgrammar = [];
         this.predictterminal=[];
-        this.grammarname = "未命名"
+        this.grammarname = "未命名";
+        this.predictAnalyse = new Predictanalyse();
+
+        this.machines.set("ef", new ExtractFactorMachine(this.parser));
+        this.machines.set("pa",new PredictAnalyseMachine(this.predictAnalyse));
+    }
+    
+    getLines(name) {
+        return this.machines.get(name).lines();
+    }
+    
+    getLineNumber(name) {
+        return this.machines.get(name).current().lineNumber;
+    }
+    
+    getText(name) {
+        return this.machines.get(name).current().text;
+    }
+    
+    canAnalyze(name) {
+        return this.machines.get(name).canAnalyze();
     }
 
-    _update() {
-        this.text = this.phases[this.phase].text;
-        this.lineNumber = this.phases[this.phase].extra.line;
+    stop(name) {
+        this.machines.get(name).stop();
     }
 
-    canAnalyze() {
-        return this.status === "STOPPED";
-    }
-
-    stop() {
-        this.status = "STOPPED";
-    }
-
-    analyze() {
-        try {
-            this.parser.compute(this.input);
-            this.output = this.printoutput(this.parser.grammar);
-            this.phases = this.parser.phases;
-            this.status =  "STARTED";
-            this.phase = 0;
-
-            this._update();
-        } catch (e) {
-            console.log(e.message);
+    analyze(name) {
+        switch (name) {
+            case "ef":
+                this.machines.get(name).analyze(this.input);
+                this.output = this.printoutput(this.machines.get(name).result());
+                break;
+            case "pa":
+                this.machines.get(name).analyze({
+                    grammar: this.parser.grammar,
+                    new_grammars: this.new_grammars,
+                    input: this.predictuserinput
+                });
+                this.predicttablestep = this.machines.get(name).result();
+                break;
+            default:
+                throw "no support machine!";
         }
+
     }
 
-    canNext() {
-        if (this.status === "STARTED") {
-            return this.phase + 1 < this.phases.length;
-        }
-        return false;
+    canNext(name) {
+        return this.machines.get(name).canNext();
     }
 
-    next() {
-        if (this.canNext()) {
-            this.phase++;
-            this._update();
-        }
+    next(name) {
+        return this.machines.get(name).next();
     }
 
-    canPrev() {
-        if (this.status === "STARTED") {
-            return this.phase > 0;
-        }
-        return false;
+    canPrev(name) {
+        return this.machines.get(name).canPrev();
     }
 
-    prev() {
-        if (this.canPrev()) {
-            this.phase--;
-            this._update();
-        }
+    prev(name) {
+        return this.machines.get(name).prev();
     }
 
     //点击上传文件之后,读取文件内容显示到textarea里面
@@ -149,7 +149,6 @@ export class MainController {
     }
 
     upload() {
-        console.log("hello world");
         let uploadButton: any = document.querySelector("#upload")
         uploadButton.click();
     }
@@ -218,24 +217,25 @@ export class MainController {
             }
             new_grammars.push(new_grammar);
         });
-        console.log(new_grammars);
         this.new_grammars = new_grammars;
     }
 
 
 
 
-    /**
-     * 打印预测分析表步骤
-     */
-    predictTableStep(){
-        let predictAnalyse = new Predictanalyse();
-        this.predicttablestep =  predictAnalyse._predictanalyse(this.parser.grammar,this.new_grammars);
-    }
+    // /**
+    //  * 打印预测分析表步骤
+    //  */
+    // predictTableStep(){
+    //     let predictAnalyse = new Predictanalyse();
+    //     let userinput = predictAnalyse._parseUserinput(this.predictuserinput);
+    //     this.predicttablestep =  predictAnalyse._predictanalyse(this.parser.grammar,this.new_grammars,userinput);
+    //     this.phases = predictAnalyse._phrase;
+    // }
 
     printarraybyindex(array){
         let output = "";
-        array.forEach((current)=>{
+        array.forEach(current => {
             output += current;
         });
         return output;
@@ -243,7 +243,7 @@ export class MainController {
 
     printarraybyindexreverse(array){
         let output = "";
-        array.reverse().forEach((current)=>{
+        array.splice(0).reverse().forEach(current => {
             output += current;
         });
         return output;
