@@ -18,3 +18,4 @@ npm-debug.log.*
 *.log
 *.out
 /doc/paper.pdf
+missfont.log
