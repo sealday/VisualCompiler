@@ -17,3 +17,4 @@ npm-debug.log.*
 *.aux
 *.log
 *.out
+/doc/paper.pdf
