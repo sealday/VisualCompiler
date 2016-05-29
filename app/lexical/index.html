@@ -74,7 +74,13 @@
 				缓冲字符串
 				<input class="form-control" ng-model="lc.bufferString">
 			</label>
+			<label>
+				演示匹配
+				<input class="form-control" value="**">
+			</label>
 			<button class="btn btn-default" ng-click="lc.spliteBuffer()">模拟</button>
+			<button class="btn btn-default">上一步</button>
+			<button class="btn btn-default">下一步</button>
 		</div>
 		<div>
 			{{lc.charArray}}
