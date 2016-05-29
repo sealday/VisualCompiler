@@ -22,13 +22,13 @@
         </div>
         <div class="panel-body">
             <div class="btn-group" style="margin-bottom: 1em;">
-                <button ng-if="main.canAnalyze()" class="btn btn-default" ng-click="main.analyze()">分析文法</button>
-                <button ng-if="!main.canAnalyze()" class="btn btn-default" ng-click="main.stop()">停止</button>
-                <button class="btn btn-default" ng-click="main.prev()" ng-disabled="!main.canPrev()">上一步</button>
-                <button class="btn btn-default" ng-click="main.next()" ng-disabled="!main.canNext()">下一步</button>
+                <button ng-if="main.canAnalyze('ef')" class="btn btn-default" ng-click="main.analyze('ef')">分析文法</button>
+                <button ng-if="!main.canAnalyze('ef')" class="btn btn-default" ng-click="main.stop('ef')">停止</button>
+                <button class="btn btn-default" ng-click="main.prev('ef')" ng-disabled="!main.canPrev('ef')">上一步</button>
+                <button class="btn btn-default" ng-click="main.next('ef')" ng-disabled="!main.canNext('ef')">下一步</button>
             </div>
-            <span>{{main.text}}</span>
-            <pre><span ng-repeat="line in main.lines" ng-class="$index == main.lineNumber ? 'current' : ''">{{line}}</span></pre>
+            <span>{{main.getText('ef')}}</span>
+            <pre><span ng-repeat="line in main.getLines('ef')" ng-class="$index == main.getLineNumber('ef') ? 'current' : ''">{{line}}</span></pre>
             <textarea ng-model="main.output" rows="5" class="form-control"></textarea>
         </div>
     </div>
@@ -62,10 +62,23 @@
 
 
         <div class="panel-body">
-            <div class="btn-group" style="margin-bottom: 1em;">
-                <button class="btn btn-default" ng-click="main.generatePredict()">生成预测分析表</button>
-                <button class="btn btn-default" ng-click="main.predictTableStep()">生成预测分析表步骤</button>
+            <div class="input-group" style="margin-bottom: 1em;">
+                <span class="input-group-addon" ng-click="main.generatePredict()">生成预测分析表</span>
+                <input type="text" class="form-control" ng-model="main.predictuserinput">
+                <!--<span class="input-group-addon" ng-click="main.predictTableStep()"> 生成预测分析表步骤</span>-->
+
             </div>
+            <div class="panel-body">
+                <div class="btn-group" style="margin-bottom: 1em;">
+                    <button ng-if="main.canAnalyze('pa')" class="btn btn-default" ng-click="main.analyze('pa')">分析文法</button>
+                    <button ng-if="!main.canAnalyze('pa')" class="btn btn-default" ng-click="main.stop('pa')">停止</button>
+                    <button class="btn btn-default" ng-click="main.prev('pa')" ng-disabled="!main.canPrev('pa')">上一步</button>
+                    <button class="btn btn-default" ng-click="main.next('pa')" ng-disabled="!main.canNext('pa')">下一步</button>
+                </div>
+                <span>{{main.getText('pa')}}</span>
+                <pre><span ng-repeat="line in main.getLines('pa')" ng-class="$index == main.getLineNumber('pa') ? 'current' : ''">{{line}}</span></pre>
+            </div>
+
             <table class="table table-bordered">
                 <thead >
                     <tr>
@@ -82,7 +95,6 @@
                     </tr>
                 </tbody>
             </table>
-
             <table class="table table-bordered">
                 <thead >
                     <tr>
